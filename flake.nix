@@ -2,7 +2,7 @@
   description = "Jason's Nix packages and system configurations.";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     darwin = {
@@ -17,6 +17,9 @@
   };
 
   outputs = inputs@{ flake-parts, ... }:
+    let
+      inherit (inputs) darwin home-manager nixpkgs;
+    in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "aarch64-darwin"
@@ -24,8 +27,24 @@
         "x86_64-darwin"
         "x86_64-linux"
       ];
-      imports = [
-        ./devices
-      ];
+      perSystem = { pkgs, ... }: {
+        formatter = pkgs.nixfmt-rfc-style;
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            nixfmt-rfc-style
+          ];
+        };
+      };
+      flake = {
+        darwinConfigurations = {
+          "JSON-MACBOOK14" = import ./hosts/work-macbook.nix { inherit darwin home-manager; };
+          "JSON-MACBOOK16" = import ./hosts/personal-macbook.nix { inherit darwin home-manager; };
+        };
+        homeConfigurations = {
+          "coder" = import ./hosts/coder.nix { inherit nixpkgs home-manager; };
+          "JSON-MINI" = import ./hosts/personal-linux.nix { inherit nixpkgs home-manager; };
+          "JSON-STATION" = import ./hosts/wsl.nix { inherit nixpkgs home-manager; };
+        };
+      };
     };
 }
