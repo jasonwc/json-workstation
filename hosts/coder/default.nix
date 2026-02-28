@@ -21,7 +21,6 @@ home-manager.lib.homeManagerConfiguration {
       home.homeDirectory = "/home/coder";
       home.stateVersion = "23.05";
       home.sessionVariables.EDITOR = "nvim";
-      home.backupFileExtension = "backup";
       nixpkgs.config.allowUnfree = true;
       programs.home-manager.enable = true;
     }
