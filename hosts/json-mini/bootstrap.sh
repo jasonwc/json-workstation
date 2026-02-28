@@ -51,8 +51,18 @@ SSHD
   touch "$HOME/.ssh/authorized_keys"
   chmod 600 "$HOME/.ssh/authorized_keys"
 
-  if [ ! -s "$HOME/.ssh/authorized_keys" ]; then
-    warn "~/.ssh/authorized_keys is empty — add your public key before relying on key-only auth!"
+  info "Fetching public keys from GitHub (jasonwc)..."
+  local gh_keys
+  gh_keys=$(curl -fsSL https://github.com/jasonwc.keys)
+  if [ -n "$gh_keys" ]; then
+    while IFS= read -r key; do
+      if ! grep -qF "$key" "$HOME/.ssh/authorized_keys"; then
+        echo "$key" >> "$HOME/.ssh/authorized_keys"
+      fi
+    done <<< "$gh_keys"
+    info "GitHub public keys added to authorized_keys."
+  else
+    warn "Could not fetch keys from GitHub — add your public key manually!"
   fi
 
   info "Enabling and starting sshd..."
@@ -127,6 +137,23 @@ setup_home_manager() {
 
   info "Running home-manager switch..."
   nix run home-manager -- switch -b backup --flake "$SYSTEM_DIR#JSON-MINI"
+
+  # Set zsh as default shell
+  local zsh_path
+  zsh_path="$(command -v zsh 2>/dev/null || echo "")"
+  if [ -n "$zsh_path" ]; then
+    if [ "$SHELL" != "$zsh_path" ]; then
+      info "Changing default shell to zsh..."
+      if ! grep -qF "$zsh_path" /etc/shells; then
+        echo "$zsh_path" | sudo tee -a /etc/shells > /dev/null
+      fi
+      sudo chsh -s "$zsh_path" "$USER"
+    else
+      info "Default shell is already zsh."
+    fi
+  else
+    warn "zsh not found — skipping shell change."
+  fi
 }
 
 # ---------- main ----------
@@ -144,8 +171,7 @@ main() {
 
   echo
   info "Bootstrap complete!"
-  info "Reminder: add your SSH public key to ~/.ssh/authorized_keys if you haven't already."
-  info "You may want to restart your shell or log out/in for all changes to take effect."
+  info "Log out and back in (or reboot) for the zsh default shell to take effect."
 }
 
 main "$@"
