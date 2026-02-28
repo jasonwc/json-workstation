@@ -151,6 +151,14 @@ setup_home_manager() {
     else
       info "Default shell is already zsh."
     fi
+
+    # Configure COSMIC Terminal
+    local cosmic_term_dir="$HOME/.config/cosmic/com.system76.CosmicTerm/v1"
+    mkdir -p "$cosmic_term_dir"
+    echo "\"$zsh_path\"" > "$cosmic_term_dir/shell"
+    echo '"FiraCode Nerd Font"' > "$cosmic_term_dir/font_name"
+    echo '14' > "$cosmic_term_dir/font_size"
+    info "COSMIC Terminal configured (zsh, FiraCode Nerd Font)."
   else
     warn "zsh not found — skipping shell change."
   fi
