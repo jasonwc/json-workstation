@@ -3,6 +3,9 @@
 {
   programs.ssh = {
     enable = true;
-    controlPath = "none";
+    enableDefaultConfig = false;
+    matchBlocks."*" = {
+      controlPath = "none";
+    };
   };
 }

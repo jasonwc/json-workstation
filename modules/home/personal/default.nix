@@ -6,7 +6,9 @@
   ];
 
   programs.git = {
-    userName = "Jason Carter";
-    userEmail = "jasonwccodes@gmail.com";
+    settings.user = {
+      name = "Jason Carter";
+      email = "jasonwccodes@gmail.com";
+    };
   };
 }

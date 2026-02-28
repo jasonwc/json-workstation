@@ -6,9 +6,11 @@
   ];
 
   programs.git = {
-    userName = "Jason Carter";
-    userEmail = "jason@mechanical-orchard.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Jason Carter";
+        email = "jason@mechanical-orchard.com";
+      };
       co-authors = {
         at  = "Anna Thornton <anna@mechanical-orchard.com>";
         sw  = "Scott Windsor <scott.windsor@mechanical-orchard.com>";
