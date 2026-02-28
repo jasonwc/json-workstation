@@ -1,8 +1,7 @@
 { ... }:
 
 {
-  homebrew.enable = true;
   homebrew.casks = [
-    # Add personal mac apps here
+    # Add personal-only mac apps here
   ];
 }

@@ -5,6 +5,7 @@ darwin.lib.darwinSystem {
   modules = [
     home-manager.darwinModules.home-manager
     ../../modules/darwin
+    ../../modules/darwin/apps.nix
     ../../modules/darwin/work-apps.nix
     {
       users.users.jasonwc.home = "/Users/jasonwc";
