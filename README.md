@@ -19,7 +19,9 @@ Nix flake configuration for all of Jason's devices.
 
 ## Install
 
-### macOS (nix-darwin)
+Each host has a directory under `hosts/` with a `default.nix` config and (where needed) a `bootstrap.sh` script for system-level setup.
+
+### macOS (Work MacBook / Personal MacBook)
 
 ```bash
 nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch --flake .
@@ -27,13 +29,31 @@ nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch 
 
 Then enable the 1Password SSH agent and CLI integration in 1Password developer settings.
 
-### Linux / WSL / Coder (home-manager)
+### JSON-MINI (Pop!_OS workstation)
 
 ```bash
-nix run home-manager -- switch -b backup --flake .
+git clone https://github.com/jasonwc/json-workstation.git
+cd json-workstation && bash hosts/json-mini/bootstrap.sh
 ```
 
-For Coder, run `install.sh` or `coder-vm.sh` if removing existing direnv/cachix from profile.
+Configures SSH server (key-only auth), disables sleep/suspend, installs Nix, and applies home-manager.
+
+### JSON-STATION (WSL)
+
+```bash
+git clone https://github.com/jasonwc/json-workstation.git
+cd json-workstation && bash hosts/json-station/bootstrap.sh
+```
+
+Ensures systemd is enabled in WSL, installs Nix, and applies home-manager.
+
+### Coder Workspace
+
+```bash
+bash ~/.system/hosts/coder/bootstrap.sh
+```
+
+Removes conflicting nix profile packages, applies home-manager, and sets zsh as default shell.
 
 ## Maintenance
 

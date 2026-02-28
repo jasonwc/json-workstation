@@ -37,13 +37,13 @@
       };
       flake = {
         darwinConfigurations = {
-          "JSON-MACBOOK14" = import ./hosts/work-macbook.nix { inherit darwin home-manager; };
-          "JSON-MACBOOK16" = import ./hosts/personal-macbook.nix { inherit darwin home-manager; };
+          "JSON-MACBOOK14" = import ./hosts/work-macbook { inherit darwin home-manager; };
+          "JSON-MACBOOK16" = import ./hosts/personal-macbook { inherit darwin home-manager; };
         };
         homeConfigurations = {
-          "coder" = import ./hosts/coder.nix { inherit nixpkgs home-manager; };
-          "JSON-MINI" = import ./hosts/personal-linux.nix { inherit nixpkgs home-manager; };
-          "JSON-STATION" = import ./hosts/wsl.nix { inherit nixpkgs home-manager; };
+          "coder" = import ./hosts/coder { inherit nixpkgs home-manager; };
+          "JSON-MINI" = import ./hosts/json-mini { inherit nixpkgs home-manager; };
+          "JSON-STATION" = import ./hosts/json-station { inherit nixpkgs home-manager; };
         };
       };
     };
