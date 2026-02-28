@@ -76,6 +76,22 @@ disable_sleep() {
   info "Sleep and screen blanking disabled — machine will stay on indefinitely."
 }
 
+# ---------- Flatpak ----------
+
+setup_flatpak() {
+  if command -v flatpak &>/dev/null; then
+    info "Flatpak is already installed."
+  else
+    info "Installing Flatpak..."
+    sudo apt-get install -y -qq flatpak
+  fi
+
+  if ! flatpak remote-list | grep -q flathub; then
+    info "Adding Flathub remote..."
+    flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  fi
+}
+
 # ---------- Nix ----------
 
 install_nix() {
@@ -122,6 +138,7 @@ main() {
   need_sudo
   setup_ssh
   disable_sleep
+  setup_flatpak
   install_nix
   setup_home_manager
 

@@ -14,11 +14,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
   };
 
   outputs = inputs@{ flake-parts, ... }:
     let
-      inherit (inputs) darwin home-manager nixpkgs;
+      inherit (inputs) darwin home-manager nix-flatpak nixpkgs;
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
@@ -42,7 +44,7 @@
         };
         homeConfigurations = {
           "coder" = import ./hosts/coder { inherit nixpkgs home-manager; };
-          "JSON-MINI" = import ./hosts/json-mini { inherit nixpkgs home-manager; };
+          "JSON-MINI" = import ./hosts/json-mini { inherit nixpkgs home-manager nix-flatpak; };
           "JSON-STATION" = import ./hosts/json-station { inherit nixpkgs home-manager; };
         };
       };

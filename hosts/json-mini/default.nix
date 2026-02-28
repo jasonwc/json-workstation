@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager }:
+{ nixpkgs, home-manager, nix-flatpak }:
 
 let
   system = "x86_64-linux";
@@ -7,6 +7,7 @@ in
 home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
   modules = [
+    nix-flatpak.homeManagerModules.nix-flatpak
     ../../modules/home/shell.nix
     ../../modules/home/git.nix
     ../../modules/home/editor.nix
@@ -15,6 +16,7 @@ home-manager.lib.homeManagerConfiguration {
     ../../modules/home/direnv.nix
     ../../modules/home/packages.nix
     ../../modules/home/fonts.nix
+    ../../modules/home/flatpak.nix
     ../../modules/home/personal
     {
       home.username = "jasonwc";
