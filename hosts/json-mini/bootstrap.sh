@@ -120,6 +120,46 @@ install_nix() {
   fi
 }
 
+# ---------- VS Code tunnel ----------
+
+setup_code_tunnel() {
+  if command -v code-tunnel &>/dev/null; then
+    info "VS Code CLI (code-tunnel) is already installed."
+  else
+    info "Installing VS Code CLI for remote tunnel..."
+    local tmp_dir
+    tmp_dir=$(mktemp -d)
+    curl -fsSL "https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64" -o "$tmp_dir/vscode-cli.tar.gz"
+    tar -xzf "$tmp_dir/vscode-cli.tar.gz" -C "$tmp_dir"
+    sudo install "$tmp_dir/code" /usr/local/bin/code-tunnel
+    rm -rf "$tmp_dir"
+  fi
+
+  info "Creating systemd user service for VS Code tunnel..."
+  mkdir -p "$HOME/.config/systemd/user"
+  cat > "$HOME/.config/systemd/user/code-tunnel.service" <<'EOF'
+[Unit]
+Description=VS Code Remote Tunnel
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/code-tunnel tunnel --accept-server-license-terms --name json-mini
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
+EOF
+
+  systemctl --user daemon-reload
+  systemctl --user enable code-tunnel.service
+
+  warn "VS Code tunnel requires one-time authentication."
+  warn "Run: code-tunnel tunnel --accept-server-license-terms --name json-mini"
+  warn "Then: systemctl --user start code-tunnel.service"
+}
+
 # ---------- Repo + home-manager ----------
 
 setup_home_manager() {
@@ -176,6 +216,7 @@ main() {
   setup_flatpak
   install_nix
   setup_home_manager
+  setup_code_tunnel
 
   echo
   info "Bootstrap complete!"
