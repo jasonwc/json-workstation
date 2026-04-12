@@ -1,0 +1,3 @@
+sunshine.json.lab {
+    reverse_proxy localhost:47990
+}
