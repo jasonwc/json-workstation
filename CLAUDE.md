@@ -22,7 +22,6 @@ json-workstation — Nix flake managing system and home environment configuratio
 |------|-----------|----------|---------------|
 | Work MacBook | `JSON-MACBOOK14` | aarch64-darwin | nix-darwin |
 | Personal MacBook | `JSON-MACBOOK16` | aarch64-darwin | nix-darwin |
-| Coder Workspace | `coder` | x86_64-linux | home-manager |
 | Personal Linux (Pop!_OS) | `JSON-MINI` | x86_64-linux | home-manager |
 | WSL | `JSON-STATION` | x86_64-linux | home-manager |
 

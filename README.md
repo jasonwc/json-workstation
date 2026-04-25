@@ -13,7 +13,6 @@ Nix flake configuration for all of Jason's devices.
 |---|---|---|
 | Work MacBook | `JSON-MACBOOK14` | nix-darwin |
 | Personal MacBook | `JSON-MACBOOK16` | nix-darwin |
-| Coder Workspace | `coder` | home-manager |
 | Personal Linux (JSON-MINI) | `JSON-MINI` | home-manager |
 | WSL (JSON-STATION) | `JSON-STATION` | home-manager |
 
@@ -46,14 +45,6 @@ cd json-workstation && bash hosts/json-station/bootstrap.sh
 ```
 
 Ensures systemd is enabled in WSL, installs Nix, and applies home-manager.
-
-### Coder Workspace
-
-```bash
-bash ~/.system/hosts/coder/bootstrap.sh
-```
-
-Removes conflicting nix profile packages, applies home-manager, and sets zsh as default shell.
 
 ## Maintenance
 

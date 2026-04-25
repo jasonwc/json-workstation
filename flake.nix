@@ -43,7 +43,6 @@
           "JSON-MACBOOK16" = import ./hosts/personal-macbook { inherit darwin home-manager; };
         };
         homeConfigurations = {
-          "coder" = import ./hosts/coder { inherit nixpkgs home-manager; };
           "JSON-MINI" = import ./hosts/json-mini { inherit nixpkgs home-manager nix-flatpak; };
           "JSON-STATION" = import ./hosts/json-station { inherit nixpkgs home-manager; };
         };
