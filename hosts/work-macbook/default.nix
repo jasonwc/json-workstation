@@ -9,6 +9,7 @@ darwin.lib.darwinSystem {
     ../../modules/darwin/work-apps.nix
     {
       users.users.jasonwc.home = "/Users/jasonwc";
+      home-manager.backupFileExtension = "backup";
       home-manager.useUserPackages = true;
       home-manager.users.jasonwc = { pkgs, ... }: {
         imports = [
