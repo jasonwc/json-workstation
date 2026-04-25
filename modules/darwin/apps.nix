@@ -2,9 +2,11 @@
 
 {
   homebrew.enable = true;
+  homebrew.brews = [
+    "wireguard-tools"
+  ];
   homebrew.casks = [
     "audio-hijack"
-    "expressvpn"
     "iterm2"
     "loopback"
     "soundsource"
