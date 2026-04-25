@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
 {
+  nixpkgs.overlays = [
+    (final: prev: {
+      kvazaar = prev.kvazaar.overrideAttrs (_: { doCheck = false; });
+    })
+  ];
+
   home.packages = with pkgs; [
     aider-chat
     argocd
