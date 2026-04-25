@@ -3,6 +3,7 @@
 {
   programs.git = {
     enable = true;
+    signing.format = null;
     settings = {
       alias = {
         "ci" = "commit";
