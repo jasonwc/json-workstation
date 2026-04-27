@@ -13,6 +13,8 @@
   security.pam.services.sudo_local.touchIdAuth = true;
 
   programs.zsh.enable = true;
+  # Match Linux hosts: home-manager runs compinit; skip the duplicate in /etc/zshrc.
+  programs.zsh.enableGlobalCompInit = false;
 
   system.defaults.dock.autohide = true;
 

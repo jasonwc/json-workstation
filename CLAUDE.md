@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-json-workstation — Nix flake managing system and home environment configuration across 5 devices (macOS and Linux).
+json-workstation — Nix flake managing system and home environment configuration across macOS and Linux devices.
 
 ## Architecture
 
@@ -14,13 +14,11 @@ json-workstation — Nix flake managing system and home environment configuratio
 - **hosts/<host>/default.nix** composes modules for each device
 - **modules/home/** contains shared home-manager modules (shell, git, editor, tmux, etc.)
 - **modules/darwin/** contains macOS-specific system and app configuration
-- Work vs personal separation via `modules/home/work/`, `modules/home/personal/`, `modules/darwin/work-apps.nix`, `modules/darwin/personal-apps.nix`
 
 ## Hosts
 
 | Host | Config Key | Platform | Config System |
 |------|-----------|----------|---------------|
-| Work MacBook | `JSON-MACBOOK14` | aarch64-darwin | nix-darwin |
 | Personal MacBook | `JSON-MACBOOK16` | aarch64-darwin | nix-darwin |
 | Personal Linux (Pop!_OS) | `JSON-MINI` | x86_64-linux | home-manager |
 | WSL | `JSON-STATION` | x86_64-linux | home-manager |

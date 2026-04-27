@@ -39,7 +39,6 @@
       };
       flake = {
         darwinConfigurations = {
-          "JSON-MACBOOK14" = import ./hosts/work-macbook { inherit darwin home-manager; };
           "JSON-MACBOOK16" = import ./hosts/personal-macbook { inherit darwin home-manager; };
         };
         homeConfigurations = {
