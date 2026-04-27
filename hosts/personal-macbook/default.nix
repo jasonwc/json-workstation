@@ -20,6 +20,7 @@ darwin.lib.darwinSystem {
           ../../modules/home/ssh.nix
           ../../modules/home/direnv.nix
           ../../modules/home/packages.nix
+          ../../modules/home/coding-agents.nix
           ../../modules/home/fonts.nix
         ];
         home.username = "jasonwc";
