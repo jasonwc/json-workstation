@@ -33,7 +33,7 @@ json-workstation — Nix flake managing system and home environment configuratio
 ## Conventions
 
 - Repo is symlinked to `~/.system` on all machines
-- Formatter is `nixfmt-rfc-style` (available in devShell)
+- Formatter is `nixfmt` (available in devShell)
 - Uses nixpkgs-unstable channel
 - `allowUnfree = true` across all hosts
 - Flatpak apps managed via nix-flatpak on JSON-MINI only
