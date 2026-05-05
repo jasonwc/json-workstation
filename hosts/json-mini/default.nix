@@ -26,6 +26,18 @@ home-manager.lib.homeManagerConfiguration {
       nixpkgs.config.allowUnfree = true;
       programs.home-manager.enable = true;
       programs.git.settings.user.email = "jasonwccodes@gmail.com";
+
+      # SSH keys permitted to connect as jasonwc@json-mini.
+      # Mirrors https://github.com/jasonwc.keys — keep in sync when keys are
+      # added or removed there. Label the device per key so revoking a single
+      # device is straightforward.
+      home.file.".ssh/authorized_keys".text = ''
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICYYwg4749v5nSEEMzsAcCfH9Kfo6Te7CWQ/gK0Pzvkm
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOog27hZwOVc7DKG1nSZ/ZkXrKS0NmgCyQQuNeWj/FcY
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGB9OGRRM87FLp6HThSCKH18KkRoWSW1aDdZKH2L++fx
+        # JSON-MACBOOK16
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJkc531zhg99+bUOxbCGlSosg7CLoqB849yTO/SiC9x1 jasonwccodes@gmail.com
+      '';
     }
   ];
 }
