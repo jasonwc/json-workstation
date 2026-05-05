@@ -23,6 +23,7 @@ home-manager.lib.homeManagerConfiguration {
       home.stateVersion = "23.05";
       nixpkgs.config.allowUnfree = true;
       programs.home-manager.enable = true;
+      programs.git.settings.user.email = "jasonwccodes@gmail.com";
     }
   ];
 }

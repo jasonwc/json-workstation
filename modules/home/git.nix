@@ -5,10 +5,7 @@
     enable = true;
     signing.format = null;
     settings = {
-      user = {
-        name = "Jason Carter";
-        email = "jasonwccodes@gmail.com";
-      };
+      user.name = "Jason Carter";
       alias = {
         ci = "commit";
         co = "checkout";
