@@ -4,7 +4,7 @@ let
   rebuildCommand =
     if pkgs.stdenv.isDarwin
     then "sudo darwin-rebuild switch --flake ."
-    else "home-manager switch -b backup --flake .";
+    else "home-manager switch -b backup --flake '.#'$(hostname)";
 
   # macOS 26 (Tahoe) has a SIGCHLD lost-wakeup race that hangs zsh in
   # signal_suspend whenever an interactive shell uses `$(...)` command
