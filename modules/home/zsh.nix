@@ -3,7 +3,7 @@
 let
   rebuildCommand =
     if pkgs.stdenv.isDarwin
-    then "darwin-rebuild switch --flake ."
+    then "sudo darwin-rebuild switch --flake ."
     else "home-manager switch -b backup --flake .";
 
   # macOS 26 (Tahoe) has a SIGCHLD lost-wakeup race that hangs zsh in
