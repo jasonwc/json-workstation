@@ -44,12 +44,10 @@ home-manager.lib.homeManagerConfiguration {
         home.activation.authorizedKeys =
           let
             authorizedKeys = pkgs.writeText "authorized_keys" ''
-              ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICYYwg4749v5nSEEMzsAcCfH9Kfo6Te7CWQ/gK0Pzvkm
-              ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOog27hZwOVc7DKG1nSZ/ZkXrKS0NmgCyQQuNeWj/FcY
-              ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGB9OGRRM87FLp6HThSCKH18KkRoWSW1aDdZKH2L++fx
-              # JSON-MACBOOK16
-              ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJkc531zhg99+bUOxbCGlSosg7CLoqB849yTO/SiC9x1 jasonwccodes@gmail.com
-              ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDMxZ8r4RXfZUyLO6YoNMtgV3/VxCa1MR43UKiWqLt0mndksVz53XNcFZ26rWiRki4b6tayUCjxi8ji8Oh9Q4ljH143rV4nVTSrKW+2DhZyZFugf0HGtZxgM8f4H0Bpc6NvPj/GKeTHlQxgWICL15bjPJ/6pYnH+eqK1RvZUlXlDzcQdz3xGBzgriyi71JU0tx9EYWkTefYNHCW1km9ztQZtEiWm75LrNLzp+44AXM4g8A3HpTzS6YAcfKFBsZZ7GpLLdUwm/XDekgR/VN9QqQXxuyl1Scww4DbwdgfwlwOZ0mh8sYwf1ycOgmPlfpH2Oic7G7ftU/1ciNvFUlMgTeTVzyTl85nvcTP3n1jFWUOhuwdJMYZk8feM3oTnY8H5C1D8nva1RR02d36BFzp9+0tf1UxhBJR+Lh1Srd3i2PNImcgexU9y1laSnE1uncpzX7VMKVZeMA1i7RPWbXok49h2U/OXM8KBW4GqAl0+0qYKSXDsoJqGSsaSVSdMxiBF6c=
+              ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICYYwg4749v5nSEEMzsAcCfH9Kfo6Te7CWQ/gK0Pzvkm json-station
+              ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOog27hZwOVc7DKG1nSZ/ZkXrKS0NmgCyQQuNeWj/FcY json-shared
+              ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGB9OGRRM87FLp6HThSCKH18KkRoWSW1aDdZKH2L++fx json-pi
+              ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJkc531zhg99+bUOxbCGlSosg7CLoqB849yTO/SiC9x1 json-macbook16
             '';
           in
           lib.hm.dag.entryAfter [ "writeBoundary" ] ''
