@@ -7,6 +7,10 @@ darwin.lib.darwinSystem {
     ../../modules/darwin
     ../../modules/darwin/apps.nix
     {
+      networking.hostName = "JSON-MACBOOK16";
+      networking.localHostName = "JSON-MACBOOK16";
+      networking.computerName = "JSON-MACBOOK16";
+
       users.users.jasonwc.home = "/Users/jasonwc";
       home-manager.backupFileExtension = "backup";
       home-manager.useUserPackages = true;
