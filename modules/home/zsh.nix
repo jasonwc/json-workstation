@@ -88,6 +88,8 @@ in
     PROJECT_FOLDER = "$HOME/workspace";
   };
 
+  home.sessionPath = [ "$HOME/.cargo/bin" ];
+
   programs.zsh = {
     enable = true;
     # On Darwin compinit's compdump uses `$()` heavily and trips the
