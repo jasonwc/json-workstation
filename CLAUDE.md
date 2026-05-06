@@ -19,7 +19,7 @@ json-workstation — Nix flake managing system and home environment configuratio
 
 | Host | Config Key | Platform | Config System |
 |------|-----------|----------|---------------|
-| Personal MacBook | `JSON-MACBOOK16` | aarch64-darwin | nix-darwin |
+| Personal MacBook (also dev SSH server) | `JSON-MACBOOK16` | aarch64-darwin | nix-darwin |
 | Work MacBook (Papercompute) | `JSON-PAPERBOOK` | aarch64-darwin | nix-darwin |
 | Personal Linux (Pop!_OS) | `JSON-MINI` | x86_64-linux | home-manager |
 | WSL | `JSON-STATION` | x86_64-linux | home-manager |

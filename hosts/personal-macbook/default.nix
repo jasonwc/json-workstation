@@ -6,6 +6,7 @@ darwin.lib.darwinSystem {
     home-manager.darwinModules.home-manager
     ../../modules/darwin
     ../../modules/darwin/apps.nix
+    ../../modules/darwin/dev-server.nix
     {
       networking.hostName = "JSON-MACBOOK16";
       networking.localHostName = "JSON-MACBOOK16";
