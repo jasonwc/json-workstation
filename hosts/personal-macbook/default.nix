@@ -29,6 +29,7 @@ darwin.lib.darwinSystem {
             ../../modules/home/packages.nix
             ../../modules/home/coding-agents.nix
             ../../modules/home/fonts.nix
+            ../../modules/home/authorized-keys.nix
           ];
           home.username = "jasonwc";
           home.homeDirectory = "/Users/jasonwc";

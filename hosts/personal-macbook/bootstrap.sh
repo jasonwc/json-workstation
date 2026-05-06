@@ -60,34 +60,6 @@ install_nix() {
   fi
 }
 
-# ---------- SSH authorized_keys ----------
-# Remote Login + sshd_config + pmset are handled declaratively by
-# modules/darwin/dev-server.nix on every nix-darwin switch. This step
-# just seeds ~/.ssh/authorized_keys from GitHub so we can actually log in.
-
-setup_authorized_keys() {
-  mkdir -p "$HOME/.ssh"
-  chmod 700 "$HOME/.ssh"
-  touch "$HOME/.ssh/authorized_keys"
-  chmod 600 "$HOME/.ssh/authorized_keys"
-
-  info "Fetching public keys from GitHub (jasonwc)..."
-  local gh_keys
-  gh_keys=$(curl -fsSL https://github.com/jasonwc.keys || true)
-  if [ -z "$gh_keys" ]; then
-    warn "Could not fetch keys from GitHub — add your public key to ~/.ssh/authorized_keys manually."
-    return
-  fi
-
-  while IFS= read -r key; do
-    [ -z "$key" ] && continue
-    if ! grep -qF "$key" "$HOME/.ssh/authorized_keys"; then
-      echo "$key" >> "$HOME/.ssh/authorized_keys"
-    fi
-  done <<< "$gh_keys"
-  info "GitHub public keys present in authorized_keys."
-}
-
 # ---------- Repo symlink ----------
 
 link_repo() {
@@ -126,7 +98,6 @@ main() {
   check_xcode
   need_sudo
   install_nix
-  setup_authorized_keys
   link_repo
   apply_darwin
 
