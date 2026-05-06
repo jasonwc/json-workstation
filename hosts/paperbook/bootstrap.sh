@@ -53,7 +53,7 @@ install_nix() {
   info "Downloading Determinate Nix .pkg..."
   local pkg_path
   pkg_path=$(mktemp -t determinate-nix).pkg
-  curl -fsSL https://dtr.mn/determinate-nix -o "$pkg_path"
+  curl -fsSL https://install.determinate.systems/determinate-pkg/stable/Universal -o "$pkg_path"
 
   info "Installing Determinate Nix (sudo installer -pkg)..."
   sudo installer -pkg "$pkg_path" -target /
