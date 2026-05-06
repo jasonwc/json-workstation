@@ -101,6 +101,30 @@ setup_flakehub_cache() {
   fi
 }
 
+# ---------- Homebrew ----------
+# nix-darwin's homebrew.enable manages the Brewfile but does NOT install brew
+# itself — it has to already be on the system before darwin-rebuild runs.
+
+install_homebrew() {
+  if command -v brew &>/dev/null; then
+    info "Homebrew already on PATH ($(command -v brew))."
+    return
+  fi
+  if [ -x /opt/homebrew/bin/brew ]; then
+    info "Homebrew installed at /opt/homebrew/bin/brew — sourcing into shell."
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    return
+  fi
+
+  info "Installing Homebrew (non-interactive)..."
+  NONINTERACTIVE=1 /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+}
+
 # ---------- Repo symlink ----------
 
 link_repo() {
@@ -142,6 +166,7 @@ main() {
   install_nix
   setup_flakehub_cache
   ensure_flakehub_login
+  install_homebrew
   link_repo
   apply_darwin
 
