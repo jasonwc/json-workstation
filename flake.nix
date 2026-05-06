@@ -18,9 +18,15 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
+  outputs =
+    inputs@{ flake-parts, ... }:
     let
-      inherit (inputs) darwin home-manager nix-flatpak nixpkgs;
+      inherit (inputs)
+        darwin
+        home-manager
+        nix-flatpak
+        nixpkgs
+        ;
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
@@ -29,17 +35,20 @@
         "x86_64-darwin"
         "x86_64-linux"
       ];
-      perSystem = { pkgs, ... }: {
-        formatter = pkgs.nixfmt;
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            nixfmt
-          ];
+      perSystem =
+        { pkgs, ... }:
+        {
+          formatter = pkgs.nixfmt;
+          devShells.default = pkgs.mkShell {
+            packages = with pkgs; [
+              nixfmt
+            ];
+          };
         };
-      };
       flake = {
         darwinConfigurations = {
           "JSON-MACBOOK16" = import ./hosts/personal-macbook { inherit darwin home-manager; };
+          "JSON-PAPERBOOK" = import ./hosts/paperbook { inherit darwin home-manager; };
         };
         homeConfigurations = {
           "JSON-Mini" = import ./hosts/json-mini { inherit nixpkgs home-manager nix-flatpak; };

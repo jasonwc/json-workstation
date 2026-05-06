@@ -7,9 +7,9 @@ darwin.lib.darwinSystem {
     ../../modules/darwin
     ../../modules/darwin/apps.nix
     {
-      networking.hostName = "JSON-MACBOOK16";
-      networking.localHostName = "JSON-MACBOOK16";
-      networking.computerName = "JSON-MACBOOK16";
+      networking.hostName = "JSON-PAPERBOOK";
+      networking.localHostName = "JSON-PAPERBOOK";
+      networking.computerName = "JSON-PAPERBOOK";
 
       users.users.jasonwc.home = "/Users/jasonwc";
       home-manager.backupFileExtension = "backup";
@@ -34,7 +34,7 @@ darwin.lib.darwinSystem {
           home.stateVersion = "23.05";
           nixpkgs.config.allowUnfree = true;
           programs.home-manager.enable = true;
-          programs.git.settings.user.email = "jasonwccodes@gmail.com";
+          programs.git.settings.user.email = "jason@papercompute.com";
         };
     }
   ];
