@@ -50,15 +50,35 @@ install_nix() {
     return
   fi
 
-  info "Installing Nix via Determinate installer..."
-  curl --proto '=https' --tlsv1.2 -sSf -L \
-    https://install.determinate.systems/nix | sh -s -- install
+  info "Downloading Determinate Nix .pkg..."
+  local pkg_path
+  pkg_path=$(mktemp -t determinate-nix).pkg
+  curl -fsSL https://dtr.mn/determinate-nix -o "$pkg_path"
+
+  info "Installing Determinate Nix (sudo installer -pkg)..."
+  sudo installer -pkg "$pkg_path" -target /
+  rm -f "$pkg_path"
 
   # Source nix in current shell so subsequent commands find it
   if [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
     # shellcheck disable=SC1091
     . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
   fi
+}
+
+# ---------- FlakeHub login ----------
+# cache.flakehub.com returns 401 to unauthenticated requests, so the cache
+# is unusable until determinate-nixd has a valid token. This step opens
+# the browser flow when needed.
+
+ensure_flakehub_login() {
+  if determinate-nixd status 2>/dev/null | grep -q "Logged in: true"; then
+    info "FlakeHub: already logged in."
+    return
+  fi
+  warn "Not logged in to FlakeHub — cache.flakehub.com will 401 without it."
+  info "Launching 'sudo determinate-nixd login' (browser flow)..."
+  sudo determinate-nixd login
 }
 
 # ---------- FlakeHub binary cache ----------
@@ -121,6 +141,7 @@ main() {
   need_sudo
   install_nix
   setup_flakehub_cache
+  ensure_flakehub_login
   link_repo
   apply_darwin
 
