@@ -6,6 +6,7 @@
     "wireguard-tools"
   ];
   homebrew.casks = [
+    "1password"
     "audio-hijack"
     "claude"
     "discord"
