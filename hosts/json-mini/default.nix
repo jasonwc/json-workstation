@@ -53,6 +53,7 @@ home-manager.lib.homeManagerConfiguration {
               ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOog27hZwOVc7DKG1nSZ/ZkXrKS0NmgCyQQuNeWj/FcY json-shared
               ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGB9OGRRM87FLp6HThSCKH18KkRoWSW1aDdZKH2L++fx json-pi
               ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJkc531zhg99+bUOxbCGlSosg7CLoqB849yTO/SiC9x1 json-macbook16
+              ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOottRYlkVYu5PJ1EpLO9mu62uUAZ04M5Ig1L4tIyxgT json-paperbook
             '';
           in
           lib.hm.dag.entryAfter [ "writeBoundary" ] ''
