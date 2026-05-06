@@ -61,6 +61,26 @@ install_nix() {
   fi
 }
 
+# ---------- FlakeHub binary cache ----------
+# cache.flakehub.com has much better aarch64-darwin coverage than
+# cache.nixos.org. The trusted-public-keys ship in Determinate's default
+# /etc/nix/nix.conf, so we only need to add it as a substituter.
+# Lives in nix.custom.conf because Determinate replaces nix.conf on updates.
+
+setup_flakehub_cache() {
+  local conf="/etc/nix/nix.custom.conf"
+  if ! sudo test -f "$conf"; then
+    info "Creating $conf..."
+    sudo install -m 644 /dev/null "$conf"
+  fi
+  if sudo grep -qE '^extra-substituters[[:space:]]*=.*cache\.flakehub\.com' "$conf"; then
+    info "FlakeHub cache already configured in $conf."
+  else
+    info "Adding FlakeHub cache to $conf..."
+    echo "extra-substituters = https://cache.flakehub.com" | sudo tee -a "$conf" > /dev/null
+  fi
+}
+
 # ---------- Repo symlink ----------
 
 link_repo() {
@@ -85,7 +105,8 @@ apply_darwin() {
     darwin-rebuild switch --flake "$SYSTEM_DIR#$HOSTNAME"
   else
     info "First run — applying via 'nix run nix-darwin'..."
-    sudo nix run nix-darwin -- switch --flake "$SYSTEM_DIR#$HOSTNAME"
+    sudo nix --extra-substituters https://cache.flakehub.com \
+      run nix-darwin -- switch --flake "$SYSTEM_DIR#$HOSTNAME"
   fi
 }
 
@@ -99,6 +120,7 @@ main() {
   check_xcode
   need_sudo
   install_nix
+  setup_flakehub_cache
   link_repo
   apply_darwin
 
