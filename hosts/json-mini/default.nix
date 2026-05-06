@@ -33,6 +33,11 @@ home-manager.lib.homeManagerConfiguration {
         programs.home-manager.enable = true;
         programs.git.settings.user.email = "jasonwccodes@gmail.com";
 
+        home.packages = with pkgs; [
+          qemu_kvm
+          qemu-utils
+        ];
+
         # SSH keys permitted to connect as jasonwc@json-mini.
         # Mirrors https://github.com/jasonwc.keys — keep in sync when keys are
         # added or removed there. Label the device per key so revoking a single
