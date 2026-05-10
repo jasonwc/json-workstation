@@ -16,7 +16,7 @@ darwin.lib.darwinSystem {
       home-manager.backupFileExtension = "backup";
       home-manager.useUserPackages = true;
       home-manager.users.jasonwc =
-        { ... }:
+        { pkgs, ... }:
         {
           imports = [
             ../../modules/home/zsh.nix
@@ -36,6 +36,13 @@ darwin.lib.darwinSystem {
           nixpkgs.config.allowUnfree = true;
           programs.home-manager.enable = true;
           programs.git.settings.user.email = "jason@papercompute.com";
+
+          home.packages = with pkgs; [
+            kubectx
+            awscli2
+            flarectl
+            fluxcd
+          ];
         };
     }
   ];

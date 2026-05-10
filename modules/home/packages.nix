@@ -14,6 +14,7 @@
     gh
     git
     htop
+    hurl
     jq
     k9s
     kind

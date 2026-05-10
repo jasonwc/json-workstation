@@ -3,6 +3,7 @@
 {
   homebrew.enable = true;
   homebrew.brews = [
+    "dagger"
     "wireguard-tools"
   ];
   homebrew.casks = [
