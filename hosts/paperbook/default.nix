@@ -17,6 +17,10 @@ darwin.lib.darwinSystem {
       users.users.jasonwc.home = "/Users/jasonwc";
       home-manager.backupFileExtension = "backup";
       home-manager.useUserPackages = true;
+      # Required so system-level nixpkgs.overlays (e.g. codexOverlay) reach
+      # home.packages. Without this, home-manager builds its own pkgs from
+      # the nixpkgs input and silently ignores system overlays.
+      home-manager.useGlobalPkgs = true;
       home-manager.users.jasonwc =
         { pkgs, ... }:
         {
@@ -35,7 +39,6 @@ darwin.lib.darwinSystem {
           home.username = "jasonwc";
           home.homeDirectory = "/Users/jasonwc";
           home.stateVersion = "23.05";
-          nixpkgs.config.allowUnfree = true;
           programs.home-manager.enable = true;
           programs.git.settings.user.email = "jason@papercompute.com";
 
