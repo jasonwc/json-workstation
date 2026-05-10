@@ -76,17 +76,33 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1777918403,
-        "narHash": "sha256-7QiZv0LcW1yIOLo2LNuCQjWon1Z1r99FwK24hbtBOF4=",
+        "lastModified": 1778274207,
+        "narHash": "sha256-I4puXmX1iovcCHZlRmztO3vW0mAbbRvq4F8wgIMQ1MM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "afc5551119aae6eab73a95c1960891cfe63204f6",
+        "rev": "b3da656039dc7a6240f27b2ef8cc6a3ef3bccae7",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-codex": {
+      "locked": {
+        "lastModified": 1778335250,
+        "narHash": "sha256-fC1z2wXfsM+okL8+vOQn6c9GpcjOzB1dD3QVt0Q9fEo=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "adaffeb92ac3f18b77cdf75034ad30cfd7cca04c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "adaffeb92ac3f18b77cdf75034ad30cfd7cca04c",
         "type": "github"
       }
     },
@@ -111,7 +127,8 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "nix-flatpak": "nix-flatpak",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-codex": "nixpkgs-codex"
       }
     }
   },

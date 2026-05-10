@@ -1,4 +1,4 @@
-{ darwin, home-manager }:
+{ darwin, home-manager, codexOverlay }:
 
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
@@ -8,6 +8,8 @@ darwin.lib.darwinSystem {
     ../../modules/darwin/apps.nix
     ../../modules/darwin/colima.nix
     {
+      nixpkgs.overlays = [ codexOverlay ];
+
       networking.hostName = "JSON-PAPERBOOK";
       networking.localHostName = "JSON-PAPERBOOK";
       networking.computerName = "JSON-PAPERBOOK";

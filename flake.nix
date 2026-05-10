@@ -5,6 +5,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    # Pinned to a trunk eval Hydra has cached codex for, since the
+    # nixpkgs-unstable channel often advances past darwin codex builds that
+    # timed out on Hydra. Bump to a newer eval (see hydra.nixos.org →
+    # nixpkgs:trunk:codex.aarch64-darwin) when a newer codex is desired.
+    nixpkgs-codex.url = "github:nixos/nixpkgs/adaffeb92ac3f18b77cdf75034ad30cfd7cca04c";
+
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,7 +32,12 @@
         home-manager
         nix-flatpak
         nixpkgs
+        nixpkgs-codex
         ;
+
+      codexOverlay = final: prev: {
+        codex = nixpkgs-codex.legacyPackages.${prev.stdenv.hostPlatform.system}.codex;
+      };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
@@ -47,12 +58,20 @@
         };
       flake = {
         darwinConfigurations = {
-          "JSON-MACBOOK16" = import ./hosts/personal-macbook { inherit darwin home-manager; };
-          "JSON-PAPERBOOK" = import ./hosts/paperbook { inherit darwin home-manager; };
+          "JSON-MACBOOK16" = import ./hosts/personal-macbook {
+            inherit darwin home-manager codexOverlay;
+          };
+          "JSON-PAPERBOOK" = import ./hosts/paperbook {
+            inherit darwin home-manager codexOverlay;
+          };
         };
         homeConfigurations = {
-          "JSON-Mini" = import ./hosts/json-mini { inherit nixpkgs home-manager nix-flatpak; };
-          "JSON-STATION" = import ./hosts/json-station { inherit nixpkgs home-manager; };
+          "JSON-Mini" = import ./hosts/json-mini {
+            inherit nixpkgs home-manager nix-flatpak codexOverlay;
+          };
+          "JSON-STATION" = import ./hosts/json-station {
+            inherit nixpkgs home-manager codexOverlay;
+          };
         };
       };
     };
