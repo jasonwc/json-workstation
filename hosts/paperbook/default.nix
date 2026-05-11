@@ -14,6 +14,11 @@ darwin.lib.darwinSystem {
       networking.localHostName = "JSON-PAPERBOOK";
       networking.computerName = "JSON-PAPERBOOK";
 
+      homebrew.casks = [
+        "linear"
+        "loom"
+      ];
+
       users.users.jasonwc.home = "/Users/jasonwc";
       home-manager.backupFileExtension = "backup";
       home-manager.useUserPackages = true;
