@@ -52,6 +52,7 @@ darwin.lib.darwinSystem {
             awscli2
             flarectl
             fluxcd
+            netlify-cli
           ];
         };
     }
