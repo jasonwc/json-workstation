@@ -32,5 +32,6 @@
     tmuxinator
     tree
     watch
+    yq-go
   ];
 }
