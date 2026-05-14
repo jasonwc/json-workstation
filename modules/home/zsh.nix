@@ -135,6 +135,10 @@ in
       zle -N down-line-or-beginning-search
       bindkey "^[[A" up-line-or-beginning-search
       bindkey "^[[B" down-line-or-beginning-search
-    '' + lib.optionalString pkgs.stdenv.isDarwin darwinShellHooks;
+    '' + lib.optionalString pkgs.stdenv.isDarwin darwinShellHooks + ''
+
+      # Local, un-managed overrides — not tracked in this flake.
+      [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+    '';
   };
 }
