@@ -88,7 +88,10 @@ in
     PROJECT_FOLDER = "$HOME/workspace";
   };
 
-  home.sessionPath = [ "$HOME/.cargo/bin" ];
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/.cargo/bin"
+  ];
 
   programs.zsh = {
     enable = true;
