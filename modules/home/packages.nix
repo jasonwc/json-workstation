@@ -12,7 +12,6 @@
     envsubst
     fzf
     gawk
-    gh
     git
     go
     htop
