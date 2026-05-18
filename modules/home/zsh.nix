@@ -86,6 +86,8 @@ in
     LSCOLORS = "exfxcxdxbxegedabagacad";
     PROJECT_BASE_DIR = "$HOME/workspace";
     PROJECT_FOLDER = "$HOME/workspace";
+    GOPATH = "$HOME/go";
+    GOBIN = "$HOME/go/bin";
   };
 
   home.sessionPath = [
