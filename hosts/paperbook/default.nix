@@ -53,6 +53,8 @@ darwin.lib.darwinSystem {
             flarectl
             fluxcd
             netlify-cli
+            dbeaver-bin
+            beekeeper-studio
           ];
         };
     }
