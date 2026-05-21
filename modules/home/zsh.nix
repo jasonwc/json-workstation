@@ -105,6 +105,16 @@ in
     # (see docs/apple-feedback-FB18565075.md). Linux hosts are fine.
     enableCompletion = !pkgs.stdenv.isDarwin;
 
+    # Homebrew is installed by hosts/<host>/bootstrap.sh but nix-darwin's
+    # homebrew.enable only manages the Brewfile — it does not add brew to
+    # PATH. Eval shellenv in .zprofile (per Homebrew's docs) so login
+    # shells pick up /opt/homebrew/{bin,sbin}, HOMEBREW_PREFIX, etc.
+    profileExtra = lib.optionalString pkgs.stdenv.isDarwin ''
+      if [ -x /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      fi
+    '';
+
     history = {
       size = 10000;
       save = 10000;
