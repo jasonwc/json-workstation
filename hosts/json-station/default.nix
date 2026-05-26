@@ -14,6 +14,7 @@ home-manager.lib.homeManagerConfiguration {
     ../../modules/home/editor.nix
     ../../modules/home/ssh.nix
     ../../modules/home/direnv.nix
+    ../../modules/home/zoxide.nix
     ../../modules/home/packages.nix
     ../../modules/home/coding-agents.nix
     ../../modules/home/fonts.nix
