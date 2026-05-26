@@ -1,0 +1,53 @@
+# Colima VM config for JSON-MACBOOK16.
+#
+# To apply changes after editing this file:
+#   1. cd ~/.system && update            # darwin-rebuild reinstalls this file at ~/.colima/default/colima.yaml
+#   2. colima restart                    # restart the Lima VM so it picks up the new yaml
+#
+# To verify Docker default-ulimits inside containers:
+#   docker run --rm alpine sh -lc 'ulimit -n'   # expect 1048576
+#
+# Field reference: colima rewrites a fully-commented template at
+#   ~/.colima/default/colima.yaml after first start. Also see:
+#   https://github.com/abiosoft/colima/blob/main/docs/INSTALL.md
+#
+# NOTE: arch, runtime, vmType, mountType, and rootDisk are immutable after
+# VM creation. The values below match what the existing VM was created with.
+# Changing them requires `colima delete` (DESTROYS the VM disk and all
+# Docker images/volumes) before they take effect.
+
+cpu: 4
+disk: 100
+memory: 8
+arch: aarch64
+runtime: docker
+vmType: vz
+mountType: virtiofs
+mountInotify: true
+mounts: []
+
+# Docker daemon config — merged into /etc/docker/daemon.json inside the VM.
+# default-ulimits is what `docker run` containers inherit, including each
+# Kind node's nested kubelet/control-plane container.
+docker:
+  default-ulimits:
+    nofile:
+      Name: nofile
+      Soft: 1048576
+      Hard: 1048576
+
+# In-VM provisioning. Runs as root on VM boot. Must be idempotent.
+# Raises inotify sysctls inside the Lima VM — the Linux defaults
+# (max_user_instances=128, max_user_watches=8192) are far below what a
+# multi-node Kind cluster needs, and the symptom is identical to a low
+# nofile ulimit ("Too many open files" allocating an inotify fd).
+provision:
+  - mode: system
+    script: |
+      sysctl -w fs.inotify.max_user_watches=524288
+      sysctl -w fs.inotify.max_user_instances=8192
+      install -d -m 0755 /etc/sysctl.d
+      cat > /etc/sysctl.d/99-kind.conf <<'EOF'
+      fs.inotify.max_user_watches = 524288
+      fs.inotify.max_user_instances = 8192
+      EOF

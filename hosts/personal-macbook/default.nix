@@ -37,12 +37,17 @@ darwin.lib.darwinSystem {
             ../../modules/home/coding-agents.nix
             ../../modules/home/fonts.nix
             ../../modules/home/authorized-keys.nix
+            ../../modules/home/colima.nix
           ];
           home.username = "jasonwc";
           home.homeDirectory = "/Users/jasonwc";
           home.stateVersion = "23.05";
           programs.home-manager.enable = true;
           programs.git.settings.user.email = "jasonwccodes@gmail.com";
+          programs.colima = {
+            enable = true;
+            configFile = ./colima.yaml;
+          };
         };
     }
   ];

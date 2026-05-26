@@ -40,12 +40,17 @@ darwin.lib.darwinSystem {
             ../../modules/home/packages.nix
             ../../modules/home/coding-agents.nix
             ../../modules/home/fonts.nix
+            ../../modules/home/colima.nix
           ];
           home.username = "jasonwc";
           home.homeDirectory = "/Users/jasonwc";
           home.stateVersion = "23.05";
           programs.home-manager.enable = true;
           programs.git.settings.user.email = "jason@papercompute.com";
+          programs.colima = {
+            enable = true;
+            configFile = ./colima.yaml;
+          };
 
           home.packages = with pkgs; [
             kubectx
