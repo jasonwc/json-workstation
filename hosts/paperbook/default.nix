@@ -46,6 +46,9 @@ darwin.lib.darwinSystem {
           home.username = "jasonwc";
           home.homeDirectory = "/Users/jasonwc";
           home.stateVersion = "23.05";
+          # home-manager master still reports 26.05 while nixpkgs-unstable has
+          # moved to 26.11pre-git. Remove once HM bumps master past 26.05.
+          home.enableNixpkgsReleaseCheck = false;
           programs.home-manager.enable = true;
           programs.git.settings.user.email = "jason@papercompute.com";
           programs.colima = {

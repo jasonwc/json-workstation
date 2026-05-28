@@ -9,7 +9,7 @@
     # nixpkgs-unstable channel often advances past darwin codex builds that
     # timed out on Hydra. Bump to a newer eval (see hydra.nixos.org →
     # nixpkgs:trunk:codex.aarch64-darwin) when a newer codex is desired.
-    nixpkgs-codex.url = "github:nixos/nixpkgs/adaffeb92ac3f18b77cdf75034ad30cfd7cca04c";
+    nixpkgs-codex.url = "github:nixos/nixpkgs/059edbdafe650eb34c2f504f8b7d9f831f5b2583";
 
     darwin = {
       url = "github:lnl7/nix-darwin";
