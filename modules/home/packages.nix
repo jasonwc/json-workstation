@@ -26,6 +26,7 @@
     mob
     nodejs
     postgresql
+    python3
     terraform
     tflint
     tfsec
