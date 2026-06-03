@@ -27,6 +27,7 @@
     nodejs
     postgresql
     python3
+    ripgrep
     terraform
     tflint
     tfsec
