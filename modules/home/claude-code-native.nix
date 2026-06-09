@@ -13,25 +13,25 @@
 }:
 
 let
-  version = "2.1.154";
+  version = "2.1.170";
 
   # nix system -> (release platform key, sha256 hex from manifest.json)
   platforms = {
     aarch64-darwin = {
       key = "darwin-arm64";
-      sha256 = "bc9881b107d7be1743c64c8b72dd66798f5d0947dbc48ed0d77964c473661fd4";
+      sha256 = "e903646d8b7a31882a80ecd27569a27d8ac57b3708745f349709632c84117fdf";
     };
     x86_64-darwin = {
       key = "darwin-x64";
-      sha256 = "1608d93261879201dcf77dd32dc173efbeea715187d3542fd05afcf7d5b5ec4d";
+      sha256 = "914f23a70bbed5d9ae567e3e04b86206ed9971b371bc9baca3f79c8885bfddb4";
     };
     aarch64-linux = {
       key = "linux-arm64";
-      sha256 = "9f732de278f7adc61d29fd5b055ddaf1bae3bb26d75fe6e06a125602565777a8";
+      sha256 = "1bb9d032440a75532f7dd4cafbc687f220aaf16c63eba17e192dfbec2f04bd25";
     };
     x86_64-linux = {
       key = "linux-x64";
-      sha256 = "67f6cab7e6c124010f62ac18f8078bc09e0db6a5b9e8ae874e9e73033c451793";
+      sha256 = "849e007277a0442ab27570d3e3d6d43787507946590e8dd1947e5a39b7081f9e";
     };
   };
 
