@@ -1,0 +1,26 @@
+# smug layout for `mux` — a per-directory work session.
+#
+# Variables (${session}, ${dir}) are supplied by the `mux` wrapper:
+#   smug start mux session=<name> dir=<abs path>
+#
+# Windows: main (paper-production start claude) · shell · servers (2 panes) ·
+# agents (3 panes) · k9s (plain shell). To auto-launch a command in a window,
+# add a `commands:` block; to stop one, delete it.
+session: ${session}
+root: ${dir}
+startup_window: main
+windows:
+  - name: main
+    commands:
+      - paper-production start claude
+  - name: shell
+  - name: servers
+    layout: even-horizontal
+    panes:
+      - commands: []
+  - name: agents
+    layout: even-horizontal
+    panes:
+      - commands: []
+      - commands: []
+  - name: k9s

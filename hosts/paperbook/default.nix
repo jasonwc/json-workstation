@@ -1,4 +1,8 @@
-{ darwin, home-manager, codexOverlay }:
+{
+  darwin,
+  home-manager,
+  codexOverlay,
+}:
 
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
@@ -42,6 +46,7 @@ darwin.lib.darwinSystem {
             ../../modules/home/coding-agents.nix
             ../../modules/home/fonts.nix
             ../../modules/home/colima.nix
+            ../../modules/home/mux
           ];
           home.username = "jasonwc";
           home.homeDirectory = "/Users/jasonwc";

@@ -31,7 +31,6 @@
     terraform
     tflint
     tfsec
-    tmuxinator
     tree
     watch
     yq-go
