@@ -21,6 +21,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # peon-ping: Warcraft-style coding-event sound packs wired into Claude Code
+    # hooks. Its home-manager module installs packs declaratively (a pinned
+    # og-packs archive) and merges hooks into ~/.claude/settings.json.
+    peon-ping = {
+      url = "github:PeonPing/peon-ping";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
   };
 
@@ -33,6 +41,7 @@
         nix-flatpak
         nixpkgs
         nixpkgs-codex
+        peon-ping
         ;
 
       codexOverlay = final: prev: {
@@ -62,12 +71,22 @@
             inherit darwin home-manager codexOverlay;
           };
           "JSON-PAPERBOOK" = import ./hosts/paperbook {
-            inherit darwin home-manager codexOverlay;
+            inherit
+              darwin
+              home-manager
+              codexOverlay
+              peon-ping
+              ;
           };
         };
         homeConfigurations = {
           "JSON-Mini" = import ./hosts/json-mini {
-            inherit nixpkgs home-manager nix-flatpak codexOverlay;
+            inherit
+              nixpkgs
+              home-manager
+              nix-flatpak
+              codexOverlay
+              ;
           };
           "JSON-STATION" = import ./hosts/json-station {
             inherit nixpkgs home-manager codexOverlay;

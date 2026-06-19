@@ -2,6 +2,7 @@
   darwin,
   home-manager,
   codexOverlay,
+  peon-ping,
 }:
 
 darwin.lib.darwinSystem {
@@ -47,6 +48,7 @@ darwin.lib.darwinSystem {
             ../../modules/home/fonts.nix
             ../../modules/home/colima.nix
             ../../modules/home/mux
+            peon-ping.homeManagerModules.default
           ];
           home.username = "jasonwc";
           home.homeDirectory = "/Users/jasonwc";
@@ -59,6 +61,33 @@ darwin.lib.darwinSystem {
           programs.colima = {
             enable = true;
             configFile = ./colima.yaml;
+          };
+
+          # Warcraft peon voice lines on Claude Code events. The flake exposes
+          # no overlay, so point `package` at its own per-system build.
+          programs.peon-ping = {
+            enable = true;
+            claudeCodeIntegration = true;
+            package = peon-ping.packages.${pkgs.stdenv.hostPlatform.system}.default;
+            installPacks = [ "peon" ];
+            # config.json is a read-only Nix-store symlink here, so the `peon`
+            # CLI / config skill can't persist changes — settings must live in
+            # the flake. Default volume is 0.5.
+            settings = {
+              volume = 0.3;
+              # Make "an agent is waiting on YOU" unmistakable vs. the routine
+              # completion banners. These three keys are the Claude Code
+              # input-needed events: permission = approval prompts, question =
+              # elicitation dialogs, idle = "your move" idle prompts. Banners
+              # only surface when the terminal isn't focused (peon is
+              # focus-aware), so this fires exactly when you've tabbed away.
+              # Completion/error banners keep their defaults (unset keys).
+              notification_templates = {
+                permission = "🔔 WAITING — {project} needs your approval";
+                question = "🔔 WAITING — {project} needs your input";
+                idle = "🔔 WAITING — {project} is idle, your move";
+              };
+            };
           };
 
           home.packages = with pkgs; [
