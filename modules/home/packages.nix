@@ -21,6 +21,7 @@
     kind
     krew
     kubectl
+    kubectl-cnpg
     kubernetes-helm
     kustomize
     mob
