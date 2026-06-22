@@ -12,6 +12,7 @@ darwin.lib.darwinSystem {
     ../../modules/darwin
     ../../modules/darwin/apps.nix
     ../../modules/darwin/colima.nix
+    ../../modules/darwin/ssh-server.nix
     {
       nixpkgs.overlays = [ codexOverlay ];
 
@@ -46,6 +47,7 @@ darwin.lib.darwinSystem {
             ../../modules/home/packages.nix
             ../../modules/home/coding-agents.nix
             ../../modules/home/fonts.nix
+            ../../modules/home/authorized-keys.nix
             ../../modules/home/colima.nix
             ../../modules/home/mux
             peon-ping.homeManagerModules.default
