@@ -16,9 +16,9 @@
 # Changing them requires `colima delete` (DESTROYS the VM disk and all
 # Docker images/volumes) before they take effect.
 
-cpu: 4
+cpu: 8
 disk: 100
-memory: 8
+memory: 48
 arch: aarch64
 runtime: docker
 vmType: vz
