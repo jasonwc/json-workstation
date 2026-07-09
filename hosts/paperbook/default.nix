@@ -22,6 +22,13 @@ darwin.lib.darwinSystem {
         "loom"
       ];
 
+      # Datadog's lapdog comes from a third-party tap. Homebrew now requires
+      # tap trust, which lives in ~/.homebrew/trust.json and can't be declared
+      # here — one-time per machine:
+      #   brew trust --formula datadog/lapdog/lapdog
+      homebrew.taps = [ "datadog/lapdog" ];
+      homebrew.brews = [ "datadog/lapdog/lapdog" ];
+
       users.users.jasonwc.home = "/Users/jasonwc";
       home-manager.backupFileExtension = "backup";
       home-manager.useUserPackages = true;
