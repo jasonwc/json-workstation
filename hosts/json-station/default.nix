@@ -1,8 +1,8 @@
-{ nixpkgs, home-manager, codexOverlay }:
+{ nixpkgs, home-manager }:
 
 let
   system = "x86_64-linux";
-  pkgs = nixpkgs.legacyPackages.${system}.extend codexOverlay;
+  pkgs = nixpkgs.legacyPackages.${system};
 in
 home-manager.lib.homeManagerConfiguration {
   inherit pkgs;

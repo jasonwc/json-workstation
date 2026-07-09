@@ -1,10 +1,12 @@
 { pkgs, lib, ... }:
 
 {
-  # claude-code is the native standalone build, pinned in ./claude-code-native.nix
-  # rather than nixpkgs so we track Anthropic's release channel directly.
-  # DISABLE_AUTOUPDATER keeps the bundled updater from drifting away from the pin
-  # (and from recreating ~/.local/bin/claude, which would shadow this on PATH).
+  # claude-code and codex are native standalone builds, pinned in
+  # ./claude-code-native.nix and ./codex-native.nix rather than nixpkgs so we
+  # track the vendors' release channels directly.
+  # DISABLE_AUTOUPDATER keeps Claude Code's bundled updater from drifting away
+  # from the pin (and from recreating ~/.local/bin/claude, which would shadow
+  # this on PATH).
   home.sessionVariables.DISABLE_AUTOUPDATER = "1";
 
   # aider-chat pulls ffmpeg-full → kvazaar, whose check phase is broken on
@@ -13,7 +15,7 @@
     with pkgs;
     [
       (callPackage ./claude-code-native.nix { })
-      codex
+      (callPackage ./codex-native.nix { })
       gemini-cli
       goose-cli
       opencode

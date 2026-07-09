@@ -1,7 +1,6 @@
 {
   darwin,
   home-manager,
-  codexOverlay,
   peon-ping,
 }:
 
@@ -14,8 +13,6 @@ darwin.lib.darwinSystem {
     ../../modules/darwin/colima.nix
     ../../modules/darwin/ssh-server.nix
     {
-      nixpkgs.overlays = [ codexOverlay ];
-
       networking.hostName = "JSON-PAPERBOOK";
       networking.localHostName = "JSON-PAPERBOOK";
       networking.computerName = "JSON-PAPERBOOK";
@@ -28,9 +25,9 @@ darwin.lib.darwinSystem {
       users.users.jasonwc.home = "/Users/jasonwc";
       home-manager.backupFileExtension = "backup";
       home-manager.useUserPackages = true;
-      # Required so system-level nixpkgs.overlays (e.g. codexOverlay) reach
-      # home.packages. Without this, home-manager builds its own pkgs from
-      # the nixpkgs input and silently ignores system overlays.
+      # Required so system-level nixpkgs.overlays reach home.packages.
+      # Without this, home-manager builds its own pkgs from the nixpkgs
+      # input and silently ignores system overlays.
       home-manager.useGlobalPkgs = true;
       home-manager.users.jasonwc =
         { pkgs, ... }:

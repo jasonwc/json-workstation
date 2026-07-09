@@ -1,4 +1,4 @@
-{ darwin, home-manager, codexOverlay }:
+{ darwin, home-manager }:
 
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
@@ -9,8 +9,6 @@ darwin.lib.darwinSystem {
     ../../modules/darwin/colima.nix
     ../../modules/darwin/dev-server.nix
     {
-      nixpkgs.overlays = [ codexOverlay ];
-
       networking.hostName = "JSON-MACBOOK16";
       networking.localHostName = "JSON-MACBOOK16";
       networking.computerName = "JSON-MACBOOK16";
@@ -18,9 +16,9 @@ darwin.lib.darwinSystem {
       users.users.jasonwc.home = "/Users/jasonwc";
       home-manager.backupFileExtension = "backup";
       home-manager.useUserPackages = true;
-      # Required so system-level nixpkgs.overlays (e.g. codexOverlay) reach
-      # home.packages. Without this, home-manager builds its own pkgs from
-      # the nixpkgs input and silently ignores system overlays.
+      # Required so system-level nixpkgs.overlays reach home.packages.
+      # Without this, home-manager builds its own pkgs from the nixpkgs
+      # input and silently ignores system overlays.
       home-manager.useGlobalPkgs = true;
       home-manager.users.jasonwc =
         { ... }:
