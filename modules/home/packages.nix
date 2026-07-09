@@ -14,6 +14,7 @@
     gawk
     git
     go
+    herdr
     htop
     hurl
     jq
