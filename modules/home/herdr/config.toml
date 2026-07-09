@@ -1,0 +1,87 @@
+# herdr configuration — tuned to feel like the tmux setup in ../tmux.nix.
+#
+# Managed by home-manager (modules/home/herdr); edit here, not in
+# ~/.config/herdr/config.toml (that path is a read-only nix store symlink).
+# After editing, `update` then `herdr server reload-config` (or prefix+R in a
+# running session) to pick up changes without losing panes.
+#
+# Reference for every key: `herdr --default-config`.
+
+[theme]
+# Mirrors tmuxPlugins.tokyo-night-tmux (moon variation) from tmux.nix.
+name = "tokyo-night"
+
+[terminal]
+# tmux.nix ran zsh; herdr uses a login $SHELL on macOS under "auto".
+shell_mode = "auto"
+# New panes/tabs inherit the source pane's cwd — matches how `mux` drops you
+# into the session's dir and tmux keeps cwd across splits.
+new_cwd = "follow"
+
+[keys]
+# tmux prefix was C-z (tmux.nix: prefix = "C-z"). Keep the muscle memory.
+# Trade-off carried over from tmux: while herdr owns ctrl+z it can't reach the
+# shell as SIGTSTP, and herdr has no "send literal prefix" bind (tmux's
+# `bind z send-keys C-z`). Suspend a foreground job from a non-herdr pane if
+# you need it.
+prefix = "ctrl+z"
+
+# Pane navigation — tmux customPaneNavigationAndResize used hjkl.
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# Splits. tmux: `|` = side-by-side, `-` = stacked.
+#   `-`  -> split_horizontal (horizontal divider = stacked), a 1:1 match.
+#   `|`  -> herdr does not reliably parse the pipe key, so the side-by-side
+#           split lives on prefix+v (vertical divider = panes side by side).
+# If these ever feel reversed on your terminal, swap the two values below.
+split_horizontal = "prefix+minus"
+split_vertical = "prefix+v"
+
+# Zoom a pane — tmux bound Up/Down to resize-pane -Z; herdr uses prefix+z.
+zoom = "prefix+z"
+
+# Scrollback. tmux `prefix+e` opened copy-mode searching /Error; herdr opens
+# the pane's scrollback in $EDITOR (vim), a superset of that flow.
+edit_scrollback = "prefix+e"
+
+# Tabs ≈ tmux windows.
+new_tab = "prefix+c"
+next_tab = "prefix+n"
+previous_tab = "prefix+p"
+switch_tab = "prefix+1..9"
+
+# Resize is a mode in herdr: prefix+r, then hjkl to resize, esc to exit —
+# replaces tmux's customPaneNavigationAndResize HJKL. tmux reloaded config on
+# prefix+r, so reload moves to prefix+R to leave prefix+r for resize.
+resize_mode = "prefix+r"
+reload_config = "prefix+shift+r"
+
+[ui]
+# tmux.nix: mouse = true.
+mouse_capture = true
+# Show the detected agent label (claude/codex/…) on each split's border, so a
+# grove full of panes tells you what's running where at a glance.
+show_agent_labels_on_pane_borders = true
+accent = "blue"
+
+[ui.toast]
+# The reason to move off tmux: a desktop notification the moment a background
+# agent goes blocked (needs input) or done. macOS notification service.
+delivery = "system"
+
+[ui.sound]
+# Audible cue on agent state change in a background workspace.
+enabled = true
+
+[session]
+# After a herdr server restart, resume Claude Code / Codex panes back into
+# their native conversation sessions (needs the per-agent integration hook —
+# see modules/home/herdr/default.nix).
+resume_agents_on_restore = true
+
+[advanced]
+# tmux.nix historyLimit = 100000 lines; ~20 MB is a comparable scrollback cap.
+scrollback_limit_bytes = 20000000

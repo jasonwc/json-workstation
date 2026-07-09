@@ -54,6 +54,7 @@ darwin.lib.darwinSystem {
             ../../modules/home/authorized-keys.nix
             ../../modules/home/colima.nix
             ../../modules/home/mux
+            ../../modules/home/herdr
             peon-ping.homeManagerModules.default
           ];
           home.username = "jasonwc";
