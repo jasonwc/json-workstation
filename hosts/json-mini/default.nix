@@ -25,6 +25,8 @@ home-manager.lib.homeManagerConfiguration {
     ../../modules/home/fonts.nix
     ../../modules/home/flatpak.nix
     ../../modules/home/authorized-keys.nix
+    ../../modules/home/mux
+    ../../modules/home/herdr
     (
       { pkgs, ... }:
       {

@@ -42,6 +42,38 @@ check_xcode() {
   info "Xcode CLT detected at $(xcode-select -p)"
 }
 
+# ---------- Authorized keys (GitHub) ----------
+# Mirror JSON-MINI's bootstrap: pull the current public keys from
+# github.com/jasonwc and merge any missing lines into authorized_keys. sshd
+# itself and the hardened config come from modules/darwin/ssh-server.nix at
+# apply_darwin time; this only seeds the keys.
+#
+# Caveat: modules/home/authorized-keys.nix reinstalls authorized_keys from its
+# static list on every `update`, so a key pulled here that isn't also in that
+# module gets overwritten on the next switch. Treat this as a first-boot safety
+# net and keep the module's list as the real source of truth.
+
+import_github_keys() {
+  info "Fetching public keys from GitHub (jasonwc)..."
+  mkdir -p "$HOME/.ssh"
+  chmod 700 "$HOME/.ssh"
+  touch "$HOME/.ssh/authorized_keys"
+  chmod 600 "$HOME/.ssh/authorized_keys"
+
+  local gh_keys
+  if gh_keys=$(curl -fsSL https://github.com/jasonwc.keys) && [ -n "$gh_keys" ]; then
+    while IFS= read -r key; do
+      [ -z "$key" ] && continue
+      if ! grep -qF "$key" "$HOME/.ssh/authorized_keys"; then
+        echo "$key" >> "$HOME/.ssh/authorized_keys"
+      fi
+    done <<< "$gh_keys"
+    info "GitHub public keys merged into authorized_keys."
+  else
+    warn "Could not fetch keys from GitHub — ensure your key is in modules/home/authorized-keys.nix."
+  fi
+}
+
 # ---------- Nix ----------
 
 install_nix() {
@@ -163,6 +195,7 @@ main() {
   check_arch
   check_xcode
   need_sudo
+  import_github_keys
   install_nix
   setup_flakehub_cache
   ensure_flakehub_login

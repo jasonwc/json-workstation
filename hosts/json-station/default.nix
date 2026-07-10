@@ -18,6 +18,8 @@ home-manager.lib.homeManagerConfiguration {
     ../../modules/home/packages.nix
     ../../modules/home/coding-agents.nix
     ../../modules/home/fonts.nix
+    ../../modules/home/mux
+    ../../modules/home/herdr
     {
       home.username = "jasonwc";
       home.homeDirectory = "/home/jasonwc";
