@@ -17,7 +17,7 @@
 # Docker images/volumes) before they take effect.
 
 cpu: 8
-disk: 100
+disk: 200
 memory: 16
 arch: aarch64
 runtime: docker
