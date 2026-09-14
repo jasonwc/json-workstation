@@ -17,6 +17,12 @@ darwin.lib.darwinSystem {
       networking.localHostName = "JSON-PAPERBOOK";
       networking.computerName = "JSON-PAPERBOOK";
 
+      # nixpkgs marks beekeeper-studio 6.0.5 insecure (Electron 39.8.1 EOL
+      # 2026-03-13, known CVEs) and no newer release is packaged yet. Allow
+      # the same version that was already installed; drop this (or the
+      # package) once nixpkgs ships a fixed build.
+      nixpkgs.config.permittedInsecurePackages = [ "beekeeper-studio-6.0.5" ];
+
       homebrew.casks = [
         "linear"
         "loom"
