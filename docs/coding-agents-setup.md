@@ -8,9 +8,11 @@ CLI coding agents installed via `modules/home/coding-agents.nix`. This doc cover
 |----------|------|-------|---------------|
 | Anthropic | Max (or API) | $100-200/mo | claude, aider, goose, opencode, pi |
 | OpenAI | ChatGPT Pro | $200/mo | codex, aider, goose, opencode, pi |
-| Google | AI Pro ($19.99/mo) or AI Ultra ($249.99/mo) | varies | gemini, aider, goose, opencode, pi |
+| Google | AI Pro ($19.99/mo) or AI Ultra ($249.99/mo) | varies | agy, aider, goose, opencode, pi |
 
-Google AI Ultra ($249.99/mo, $124.99 intro) is the ChatGPT Pro equivalent — highest limits, Deep Think reasoning, Project Mariner, YouTube Premium, $100/mo GCP credits. Google AI Pro ($19.99/mo) is sufficient for generous Gemini CLI access with 1M token context.
+Google AI Ultra ($249.99/mo, $124.99 intro) is the ChatGPT Pro equivalent — highest limits, Deep Think reasoning, Project Mariner, YouTube Premium, $100/mo GCP credits. Google AI Pro ($19.99/mo) is sufficient for generous access with 1M token context.
+
+Google retired Gemini CLI in favour of Antigravity CLI, so this flake installs `antigravity-cli` (binary: `agy`) instead of `gemini-cli`.
 
 Sign up: https://gemini.google/subscriptions/
 
@@ -21,7 +23,7 @@ Sign up: https://gemini.google/subscriptions/
 ```bash
 claude        # Opens browser -> Anthropic OAuth
 codex         # Opens browser -> ChatGPT OAuth
-gemini        # Opens browser -> Google OAuth (select "Sign in with Google")
+agy           # Opens browser -> Google OAuth (select "Sign in with Google")
 ```
 
 ### Interactive config
@@ -50,7 +52,7 @@ The same env vars also work for goose, opencode, and pi as fallbacks.
 |------|---------|
 | claude | `~/.claude/.credentials.json` (Linux), macOS Keychain (mac) |
 | codex | OS keyring or `~/.codex/auth.json` |
-| gemini | `~/.gemini/` |
+| agy | `~/.antigravity/` (not yet confirmed on a logged-in machine) |
 | goose | OS keyring or `~/.config/goose/secrets.yaml` |
 | opencode | `~/.local/share/opencode/auth.json` |
 | pi | `~/.pi/agent/auth.json` |
@@ -63,7 +65,7 @@ The same env vars also work for goose, opencode, and pi as fallbacks.
 | aider | `~/.aider.conf.yml` | `.aider.conf.yml` in repo root |
 | claude | `~/.claude/settings.json` | `.claude/settings.json` |
 | codex | `~/.codex/config.toml` | `.codex/config.toml` |
-| gemini | `~/.gemini/.env` | `.env` in project dir |
+| agy | `~/.antigravity/` (not yet confirmed on a logged-in machine) | `.antigravityignore` in repo root |
 | goose | `~/.config/goose/config.yaml` | — |
 | opencode | — | `opencode.json` in project root |
 | pi | `~/.pi/agent/settings.json` | — |
@@ -74,5 +76,5 @@ API keys should NOT go in Nix config — the Nix store is world-readable. Option
 
 - **`.env` files** outside Nix (e.g., `~/.env` or `~/.config/coding-agents.env`)
 - **OS keyring** (used by claude, codex, goose automatically)
-- **OAuth browser login** (claude, codex, gemini) — credentials stored per-machine automatically
+- **OAuth browser login** (claude, codex, agy) — credentials stored per-machine automatically
 - For headless/remote: `claude setup-token`, `codex login --device-auth`, or set env vars via SSH

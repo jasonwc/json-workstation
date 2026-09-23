@@ -16,10 +16,10 @@
     [
       (callPackage ./claude-code-native.nix { })
       (callPackage ./codex-native.nix { })
-      gemini-cli
+      antigravity-cli # Gemini CLI's successor; the binary is `agy`
       goose-cli
       opencode
       pi-coding-agent
     ]
-    ++ lib.optional stdenv.isLinux aider-chat;
+    ++ lib.optional stdenv.hostPlatform.isLinux aider-chat;
 }

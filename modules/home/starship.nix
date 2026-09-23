@@ -5,7 +5,7 @@
     enable = true;
     # On Darwin we use a custom zsh hook (see zsh.nix) that avoids `$(...)`
     # to dodge the macOS 26 SIGCHLD lost-wakeup bug. Linux hosts use upstream.
-    enableZshIntegration = !pkgs.stdenv.isDarwin;
+    enableZshIntegration = !pkgs.stdenv.hostPlatform.isDarwin;
     settings = {
       add_newline = false;
       format = "$shlvl$shell$username$hostname$nix_shell$git_branch$git_commit$git_state$git_status$directory$jobs$cmd_duration$character";

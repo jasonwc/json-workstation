@@ -51,8 +51,8 @@ stdenvNoCC.mkDerivation {
   dontUnpack = true;
   dontStrip = true; # preserve Anthropic's macOS code signature
 
-  nativeBuildInputs = lib.optionals stdenv.isLinux [ autoPatchelfHook ];
-  buildInputs = lib.optionals stdenv.isLinux [ stdenv.cc.cc.lib ];
+  nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
+  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [ stdenv.cc.cc.lib ];
 
   installPhase = ''
     runHook preInstall

@@ -2,9 +2,10 @@
 
 let
   rebuildCommand =
-    if pkgs.stdenv.isDarwin
-    then "sudo darwin-rebuild switch --flake ."
-    else "home-manager switch -b backup --flake '.#'$(hostname)";
+    if pkgs.stdenv.hostPlatform.isDarwin then
+      "sudo darwin-rebuild switch --flake ."
+    else
+      "home-manager switch -b backup --flake '.#'$(hostname)";
 
   # macOS 26 (Tahoe) has a SIGCHLD lost-wakeup race that hangs zsh in
   # signal_suspend whenever an interactive shell uses `$(...)` command
@@ -103,13 +104,13 @@ in
     # `zsh -c`, so the activation-time prebake approach also hangs.
     # No tab completion on Darwin until zsh's signal_suspend is patched
     # (see docs/apple-feedback-FB18565075.md). Linux hosts are fine.
-    enableCompletion = !pkgs.stdenv.isDarwin;
+    enableCompletion = !pkgs.stdenv.hostPlatform.isDarwin;
 
     # Homebrew is installed by hosts/<host>/bootstrap.sh but nix-darwin's
     # homebrew.enable only manages the Brewfile — it does not add brew to
     # PATH. Eval shellenv in .zprofile (per Homebrew's docs) so login
     # shells pick up /opt/homebrew/{bin,sbin}, HOMEBREW_PREFIX, etc.
-    profileExtra = lib.optionalString pkgs.stdenv.isDarwin ''
+    profileExtra = lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
       if [ -x /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
@@ -148,7 +149,9 @@ in
       zle -N down-line-or-beginning-search
       bindkey "^[[A" up-line-or-beginning-search
       bindkey "^[[B" down-line-or-beginning-search
-    '' + lib.optionalString pkgs.stdenv.isDarwin darwinShellHooks + ''
+    ''
+    + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin darwinShellHooks
+    + ''
 
       # Local, un-managed overrides — not tracked in this flake.
       [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

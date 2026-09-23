@@ -16,10 +16,10 @@ in
     enable = true;
     # On Darwin we source a patched init script below to avoid `$(...)` in
     # the chpwd hook. Linux hosts use the upstream integration.
-    enableZshIntegration = !pkgs.stdenv.isDarwin;
+    enableZshIntegration = !pkgs.stdenv.hostPlatform.isDarwin;
   };
 
-  programs.zsh.initContent = lib.optionalString pkgs.stdenv.isDarwin ''
+  programs.zsh.initContent = lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
     source ${zoxideInitDarwin}
   '';
 }
