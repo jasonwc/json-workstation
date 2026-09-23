@@ -16,25 +16,25 @@
 }:
 
 let
-  version = "0.154.0";
+  version = "0.156.0";
 
   # nix system -> (rust target triple, sha256 hex from codex-package_SHA256SUMS)
   platforms = {
     aarch64-darwin = {
       target = "aarch64-apple-darwin";
-      sha256 = "427ca74c027049e0cd1a330d611e7f8d1fe0f1eb6a6d85ac16f61bcf2cb4a485";
+      sha256 = "6f7bdad25693f464a146ad6f24d477ad6fbffe07b62556f829ee5d3b04f48f8b";
     };
     x86_64-darwin = {
       target = "x86_64-apple-darwin";
-      sha256 = "8052c6accbe0361bfbd424a10aa5f2226636ed8afb6dcbd5e6437993e57b16d8";
+      sha256 = "41ed9b4be611af74149c8fc9bc5f2f217117de368d6725555087b331e19f4d89";
     };
     aarch64-linux = {
       target = "aarch64-unknown-linux-musl";
-      sha256 = "97d93e11df72d3c26772db019e6ea8bb72c246500d46b98c760839f3240355e6";
+      sha256 = "ff07a585b07be3192233efa987cc31164c48954636f583806664afb44bb6b8db";
     };
     x86_64-linux = {
       target = "x86_64-unknown-linux-musl";
-      sha256 = "fc6e3e3b85f2cf7d664520ee5c66a7fe4aa12bae7d46834f47e2f165fd0d6f78";
+      sha256 = "e8b744b03adb90b296bf632c8a29167e75ea1b9d2980e49d3dfc6e84f5dba749";
     };
   };
 
