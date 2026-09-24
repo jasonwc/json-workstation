@@ -27,6 +27,7 @@ home-manager.lib.homeManagerConfiguration {
     ../../modules/home/authorized-keys.nix
     ../../modules/home/mux
     ../../modules/home/herdr
+    ./monitoring.nix
     (
       { pkgs, ... }:
       {

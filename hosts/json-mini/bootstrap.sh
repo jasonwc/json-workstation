@@ -86,6 +86,15 @@ disable_sleep() {
   info "Sleep and screen blanking disabled — machine will stay on indefinitely."
 }
 
+# ---------- Lingering ----------
+
+enable_linger() {
+  # Start systemd user services (Prometheus exporters, VS Code tunnel) at
+  # boot instead of waiting for a login session.
+  info "Enabling lingering for $USER..."
+  sudo loginctl enable-linger "$USER"
+}
+
 # ---------- Flatpak ----------
 
 setup_flatpak() {
@@ -213,6 +222,7 @@ main() {
   need_sudo
   setup_ssh
   disable_sleep
+  enable_linger
   setup_flatpak
   install_nix
   setup_home_manager
