@@ -38,5 +38,6 @@ json-workstation — Nix flake managing system and home environment configuratio
 - Uses nixpkgs-unstable channel
 - `allowUnfree = true` across all hosts
 - Flatpak apps managed via nix-flatpak on JSON-MINI only
+- Coding agents come from `modules/home/coding-agents.nix` on every host. opencode, pi and DeepSeek's `dsh` also get the DGX Sparks (`inference.json.lab`) as an extra provider, from the list in `modules/home/json-lab-models.nix`. `dsh` is a pinned `npx` wrapper with its telemetry and session-log upload off.
 - Git is configured to rebase on pull (no merge commits)
 - `PROJECT_BASE_DIR` and `PROJECT_FOLDER` both point to `~/workspace`

@@ -1,6 +1,11 @@
 { pkgs, lib, ... }:
 
 {
+  imports = [
+    ./deepseek-harness.nix
+    ./json-lab-inference.nix
+  ];
+
   # claude-code and codex are native standalone builds, pinned in
   # ./claude-code-native.nix and ./codex-native.nix rather than nixpkgs so we
   # track the vendors' release channels directly.
