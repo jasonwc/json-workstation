@@ -27,6 +27,22 @@
       contextWindow = 850000;
     }
     {
+      id = "qwen3.8-27b-nvfp4";
+      name = "Qwen3.8-27B NVFP4 (1 Spark)";
+      contextWindow = 262144;
+    }
+    {
+      id = "MiMo-v2.6-Flash";
+      name = "MiMo-V2.6-Flash (EAGLE or DFlash)";
+      contextWindow = 1048576;
+    }
+    {
+      id = "deepseek-v4-flash-vision-exp";
+      name = "DeepSeek-V4-Flash DSpark";
+      contextWindow = 1048576;
+      deepseekThinking = true;
+    }
+    {
       id = "DeepSeek-v4.1-Flash-EXL3";
       name = "DeepSeek-V4.1-Flash EXL3";
       contextWindow = 600000;
