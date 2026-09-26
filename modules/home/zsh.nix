@@ -136,6 +136,24 @@ in
         cd ~/.system && ${rebuildCommand} && exec "$SHELL"
       }
 
+      # Reach a localhost-only port on another machine: `fwd json-mini 3080`
+      # (or `fwd json-mini 3080 8080 …`), then open http://localhost:<port>.
+      # Ctrl-C closes the tunnel. Nothing on the remote side is exposed.
+      fwd() {
+        if (( $# < 2 )); then
+          echo "usage: fwd <host> <port> [port...]" >&2
+          return 1
+        fi
+        local host=$1 port
+        shift
+        local -a forwards
+        for port in "$@"; do
+          forwards+=(-L "$port:127.0.0.1:$port")
+          echo "http://localhost:$port -> $host:$port"
+        done
+        ssh -N -o ExitOnForwardFailure=yes "''${forwards[@]}" "$host"
+      }
+
       bindkey -e
       bindkey '^[^[[D' backward-word
       bindkey '^[^[[C' forward-word
