@@ -185,7 +185,7 @@ setup_home_manager() {
   fi
 
   info "Running home-manager switch..."
-  nix run home-manager -- switch -b backup --flake "$SYSTEM_DIR#JSON-MINI"
+  nix run home-manager -- switch -b backup --flake "$SYSTEM_DIR#JSON-Mini"
 
   # Set zsh as default shell
   local zsh_path
