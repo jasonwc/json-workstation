@@ -1,8 +1,9 @@
 { pkgs, ... }:
 
-# Monitoring endpoints json-lab reads. Prometheus exporters (jobs `json-mini` on
-# :9100 and `json-mini-gpu` on :9101). They run as systemd user services, so
-# bootstrap.sh enables lingering to start them at boot without a login.
+# Monitoring endpoints json-lab reads: Prometheus exporters (jobs `json-mini`
+# on :9100 and `json-mini-gpu` on :9101) and Glances (:61208) for Homepage.
+# They run as systemd user services, so bootstrap.sh enables lingering to start
+# them at boot without a login.
 {
   systemd.user.services.node-exporter = {
     Unit.Description = "Prometheus node exporter";
