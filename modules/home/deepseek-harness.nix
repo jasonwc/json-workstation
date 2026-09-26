@@ -20,7 +20,12 @@ let
     text = ''
       export DSH_TELEMETRY_DISABLED=1
       export DSH_TELEMETRY_MODE=DISABLED
-      exec npx --yes "@deepseek-ai/dsh@${version}" "$@"
+      # The web profile's live config reload loads cordis-plugin-hmr, which
+      # needs Node's --expose-internals (0.1.5-rc.3 does this even though its
+      # docs say live reload shouldn't), so run the bin under node directly.
+      # shellcheck disable=SC2016
+      exec npx --yes --package "@deepseek-ai/dsh@${version}" -- \
+        sh -c 'exec node --expose-internals "$(readlink -f "$(command -v dsh)")" "$@"' dsh "$@"
     '';
   };
 
