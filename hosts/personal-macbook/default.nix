@@ -8,6 +8,7 @@ darwin.lib.darwinSystem {
     ../../modules/darwin/apps.nix
     ../../modules/darwin/colima.nix
     ../../modules/darwin/dev-server.nix
+    ./monitoring.nix
     {
       networking.hostName = "JSON-MACBOOK16";
       networking.localHostName = "JSON-MACBOOK16";
