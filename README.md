@@ -68,10 +68,15 @@ Validate with `nix flake check`; format with `nixfmt` (in the devShell).
 
 ## Coding agents
 
-`modules/home/coding-agents.nix` installs Claude Code and Codex (pinned native
-builds), opencode, pi, goose, `agy` and, on Linux, aider on every host. DeepSeek's
-`dsh` is a pinned `npx` wrapper (`modules/home/deepseek-harness.nix`) with its
-telemetry and session-log upload turned off.
+`modules/home/coding-agents.nix` installs Claude Code, Codex, opencode and pi
+(upstream prebuilt binaries, pinned in `modules/home/*-native.nix`), `agy`,
+Cursor's `cursor-agent`, GitHub's `copilot` and, on Linux, aider on every host.
+DeepSeek's `dsh` is a pinned `npx` wrapper (`modules/home/deepseek-harness.nix`)
+with its telemetry and session-log upload turned off.
+
+`scripts/bump-agents.sh` moves the pinned agents (claude, codex, opencode, pi,
+dsh) to their latest releases, versions and hashes both; pass names to bump
+only some. The rest follow nixpkgs via `nix flake update`.
 
 opencode, pi and `dsh` also get the DGX Sparks as an extra provider, `json-lab`,
 at `http://inference.json.lab/v1` (`modules/home/json-lab-inference.nix`). The

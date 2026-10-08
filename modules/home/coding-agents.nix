@@ -6,9 +6,9 @@
     ./json-lab-inference.nix
   ];
 
-  # claude-code and codex are native standalone builds, pinned in
-  # ./claude-code-native.nix and ./codex-native.nix rather than nixpkgs so we
-  # track the vendors' release channels directly.
+  # claude-code, codex, opencode and pi are upstream prebuilt binaries, pinned
+  # in ./*-native.nix rather than nixpkgs so we track the vendors' release
+  # channels directly. scripts/bump-agents.sh moves them all to latest.
   # DISABLE_AUTOUPDATER keeps Claude Code's bundled updater from drifting away
   # from the pin (and from recreating ~/.local/bin/claude, which would shadow
   # this on PATH).
@@ -21,10 +21,11 @@
     [
       (callPackage ./claude-code-native.nix { })
       (callPackage ./codex-native.nix { })
+      (callPackage ./opencode-native.nix { })
+      (callPackage ./pi-native.nix { })
       antigravity-cli # Gemini CLI's successor; the binary is `agy`
-      goose-cli
-      opencode
-      pi-coding-agent
+      cursor-cli # the binary is `cursor-agent`
+      github-copilot-cli # the binary is `copilot`
     ]
     ++ lib.optional stdenv.hostPlatform.isLinux aider-chat;
 }
