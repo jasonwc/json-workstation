@@ -7,6 +7,13 @@
 #
 # Reference for every key: `herdr --default-config`.
 
+# Skip the first-run notification setup — [ui.toast] and [ui.sound] below
+# already make those choices. Leaving it unset makes herdr try to write
+# `onboarding = false` back into this file on every start, which fails
+# against the read-only store symlink ("failed to save onboarding setting:
+# Permission denied").
+onboarding = false
+
 [theme]
 # Mirrors tmuxPlugins.tokyo-night-tmux (moon variation) from tmux.nix.
 name = "tokyo-night"
