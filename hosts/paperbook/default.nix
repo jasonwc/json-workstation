@@ -17,11 +17,11 @@ darwin.lib.darwinSystem {
       networking.localHostName = "JSON-PAPERBOOK";
       networking.computerName = "JSON-PAPERBOOK";
 
-      # nixpkgs marks beekeeper-studio 6.1.1 insecure: it still ships
-      # Electron 39.8.1 (EOL 2026-03-13, known CVEs). Allow exactly the
+      # nixpkgs marks beekeeper-studio 6.1.4 insecure: it still ships
+      # Electron 39.8.10 (EOL 2026-03-13, known CVEs). Allow exactly the
       # packaged version; drop this (or the package) once nixpkgs ships a
       # build on a supported Electron.
-      nixpkgs.config.permittedInsecurePackages = [ "beekeeper-studio-6.1.1" ];
+      nixpkgs.config.permittedInsecurePackages = [ "beekeeper-studio-6.1.4" ];
 
       homebrew.casks = [
         "linear"
