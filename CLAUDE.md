@@ -39,5 +39,6 @@ json-workstation — Nix flake managing system and home environment configuratio
 - `allowUnfree = true` across all hosts
 - Flatpak apps managed via nix-flatpak on JSON-MINI only
 - Coding agents come from `modules/home/coding-agents.nix` on every host. opencode, pi and DeepSeek's `dsh` also get the DGX Sparks (`inference.json.lab`) as an extra provider, from the list in `modules/home/json-lab-models.nix`. `dsh` is a pinned `npx` wrapper with its telemetry and session-log upload off.
+- Renovate runs from JSON-Mini, not the GitHub app: `hosts/json-mini/renovate.nix` is a weekly home-manager user timer (Sun 03:30 PT) covering json-lab, json-agents, json-inference and json-workstation. The token comes from `gh auth token` at run time (gh login in the desktop keyring, so json-mini needs a login after a reboot); nothing automerges. Run now: `systemctl --user start renovate`; logs: `journalctl --user -u renovate`
 - Git is configured to rebase on pull (no merge commits)
 - `PROJECT_BASE_DIR` and `PROJECT_FOLDER` both point to `~/workspace`

@@ -28,6 +28,7 @@ home-manager.lib.homeManagerConfiguration {
     ../../modules/home/mux
     ../../modules/home/herdr
     ./monitoring.nix
+    ./renovate.nix
     (
       { pkgs, ... }:
       {
