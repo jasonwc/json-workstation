@@ -40,7 +40,16 @@ let
     set -euo pipefail
     RENOVATE_TOKEN="$(gh auth token)" || { echo "gh auth token failed: is the keyring unlocked (log in to json-mini once after a reboot)?" >&2; exit 1; }
     export RENOVATE_TOKEN GITHUB_COM_TOKEN="$RENOVATE_TOKEN"
-    exec renovate "$@"
+    renovate "$@"
+    # Heartbeat for Prometheus (json-mini node-exporter textfile collector; json-lab
+    # alert RenovateStale). Only reached when the run succeeded.
+    d="$HOME/.local/state/node-exporter-textfile"
+    mkdir -p "$d"
+    printf '%s\n' \
+      '# HELP renovate_last_success_timestamp_seconds Unix time of the last successful Renovate run.' \
+      '# TYPE renovate_last_success_timestamp_seconds gauge' \
+      "renovate_last_success_timestamp_seconds $(date +%s)" > "$d/.renovate.prom.tmp"
+    mv "$d/.renovate.prom.tmp" "$d/renovate.prom"
   '';
 in
 {

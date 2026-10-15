@@ -8,7 +8,10 @@
   systemd.user.services.node-exporter = {
     Unit.Description = "Prometheus node exporter";
     Service = {
-      ExecStart = "${pkgs.prometheus-node-exporter}/bin/node_exporter --web.listen-address=:9100";
+      # Textfile collector: jobs on json-mini drop *.prom heartbeats here (e.g.
+      # renovate.nix writes renovate_last_success_timestamp_seconds).
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/.local/state/node-exporter-textfile";
+      ExecStart = "${pkgs.prometheus-node-exporter}/bin/node_exporter --web.listen-address=:9100 --collector.textfile.directory=%h/.local/state/node-exporter-textfile";
       Restart = "always";
       RestartSec = 5;
     };
