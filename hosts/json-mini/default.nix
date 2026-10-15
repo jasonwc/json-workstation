@@ -29,6 +29,7 @@ home-manager.lib.homeManagerConfiguration {
     ../../modules/home/herdr
     ./monitoring.nix
     ./renovate.nix
+    ./inference-ui.nix
     (
       { pkgs, ... }:
       {
