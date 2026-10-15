@@ -50,6 +50,7 @@ darwin.lib.darwinSystem {
             ../../modules/home/starship.nix
             ../../modules/home/tmux.nix
             ../../modules/home/git.nix
+            ../../modules/home/gh-dash.nix
             ../../modules/home/editor.nix
             ../../modules/home/ssh.nix
             ../../modules/home/direnv.nix
