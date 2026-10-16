@@ -15,7 +15,13 @@
       WorkingDirectory = "%h/workspace/json-inference";
       EnvironmentFile = "%h/.config/json-inference/ui-auth";
       # ssh for the Sparks, git for the rev the CLI records in results/.
-      Environment = [ "PATH=${pkgs.lib.makeBinPath [ pkgs.python3 pkgs.openssh pkgs.git pkgs.coreutils pkgs.bash ]}" ];
+      # The k3s nodes: models.lab.json-lab.online's ingress (Authelia forward-auth) reaches
+      # this port from them, so their Remote-User header is trusted; direct LAN access
+      # still needs the basic-auth login in ui-auth.
+      Environment = [
+        "PATH=${pkgs.lib.makeBinPath [ pkgs.python3 pkgs.openssh pkgs.git pkgs.coreutils pkgs.bash ]}"
+        "INFERENCE_UI_TRUSTED_PROXIES=192.168.124.10,192.168.124.11,192.168.124.12"
+      ];
       ExecStart = "${pkgs.python3}/bin/python3 -m json_inference serve-ui --host 0.0.0.0 --port 8091";
       Restart = "always";
       RestartSec = 5;
