@@ -47,6 +47,9 @@ home-manager.lib.homeManagerConfiguration {
         home.packages = with pkgs; [
           qemu_kvm
           qemu-utils
+          # Claude Code's Bash sandbox (bubblewrap comes from the OS) for json-agents'
+          # agent-queue worker.
+          socat
         ];
       }
     )
