@@ -11,6 +11,7 @@ darwin.lib.darwinSystem {
     ../../modules/darwin
     ../../modules/darwin/apps.nix
     ../../modules/darwin/colima.nix
+    ../../modules/darwin/rex-json-mini.nix
     ../../modules/darwin/ssh-server.nix
     {
       networking.hostName = "JSON-PAPERBOOK";
