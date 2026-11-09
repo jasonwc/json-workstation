@@ -14,6 +14,7 @@
   fetchurl,
   autoPatchelfHook,
   stdenv,
+  libxcb,
 }:
 
 let
@@ -55,7 +56,11 @@ stdenvNoCC.mkDerivation {
   dontStrip = true; # preserve the macOS code signature and bun's payload
 
   nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
-  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [ stdenv.cc.cc.lib ];
+  # libxcb: the X11 clipboard addon (linux-platform-x11.node) links it.
+  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [
+    stdenv.cc.cc.lib
+    libxcb
+  ];
 
   installPhase = ''
     runHook preInstall
