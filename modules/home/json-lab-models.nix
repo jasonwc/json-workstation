@@ -22,9 +22,9 @@
       contextWindow = 262144;
     }
     {
-      id = "GLM-5.3-Flash-EXL3";
-      name = "GLM-5.3-Flash EXL3";
-      contextWindow = 850000;
+      id = "qwen3.8-flash-next-tensorfold";
+      name = "Qwen3.8-Flash-Next NVFP4 (TensorFold)";
+      contextWindow = 262144;
     }
     {
       id = "qwen3.8-27b-nvfp4";
@@ -47,6 +47,13 @@
       name = "DeepSeek-V4.1-Flash EXL3";
       contextWindow = 600000;
       # Thinks unless told not to; dsh needs this to turn thinking off.
+      deepseekThinking = true;
+    }
+    {
+      id = "DeepSeek-V4.1-Flash-1017";
+      name = "DeepSeek-V4.1-Flash-1017 EXL3 (TensorFold)";
+      # The recipe's CONTEXT in json-inference models/deepseek-v4.1-flash-1017-exl3.toml.
+      contextWindow = 524288;
       deepseekThinking = true;
     }
   ];
