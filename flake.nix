@@ -66,7 +66,7 @@
       flake = {
         darwinConfigurations = {
           "JSON-MACBOOK16" = import ./hosts/personal-macbook {
-            inherit darwin home-manager;
+            inherit darwin home-manager rex;
           };
           "JSON-PAPERBOOK" = import ./hosts/paperbook {
             inherit darwin home-manager peon-ping;

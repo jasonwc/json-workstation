@@ -1,19 +1,27 @@
-{ darwin, home-manager }:
+{
+  darwin,
+  home-manager,
+  rex,
+}:
 
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
+  specialArgs = { inherit rex; };
   modules = [
     home-manager.darwinModules.home-manager
     ../../modules/darwin
     ../../modules/darwin/apps.nix
     ../../modules/darwin/colima.nix
-    ../../modules/darwin/rex-json-mini.nix
+    ../../modules/darwin/rex-tunnels.nix
     ../../modules/darwin/dev-server.nix
     ./monitoring.nix
+    ./rex.nix
     {
       networking.hostName = "JSON-MACBOOK16";
       networking.localHostName = "JSON-MACBOOK16";
       networking.computerName = "JSON-MACBOOK16";
+
+      rexTunnels.hosts = [ "json-mini" ];
 
       users.users.jasonwc.home = "/Users/jasonwc";
       home-manager.backupFileExtension = "backup";

@@ -11,12 +11,17 @@ darwin.lib.darwinSystem {
     ../../modules/darwin
     ../../modules/darwin/apps.nix
     ../../modules/darwin/colima.nix
-    ../../modules/darwin/rex-json-mini.nix
+    ../../modules/darwin/rex-tunnels.nix
     ../../modules/darwin/ssh-server.nix
     {
       networking.hostName = "JSON-PAPERBOOK";
       networking.localHostName = "JSON-PAPERBOOK";
       networking.computerName = "JSON-PAPERBOOK";
+
+      rexTunnels.hosts = [
+        "json-mini"
+        "json-macbook16"
+      ];
 
       # nixpkgs marks beekeeper-studio 6.1.4 insecure: it still ships
       # Electron 39.8.10 (EOL 2026-03-13, known CVEs). Allow exactly the
