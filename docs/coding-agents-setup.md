@@ -8,7 +8,11 @@ CLI coding agents installed via `modules/home/coding-agents.nix`. This doc cover
 |----------|------|-------|---------------|
 | Anthropic | Max (or API) | $100-200/mo | claude, aider (API key) |
 | OpenAI | ChatGPT Pro | $200/mo | codex, opencode, pi, dsh, aider (API key) |
-| Google | AI Pro ($19.99/mo) or AI Ultra ($249.99/mo) | varies | agy, aider, opencode, pi |
+| Google | AI Pro ($19.99/mo) or AI Ultra ($249.99/mo) | varies | agy, aider, pi |
+| GitHub | Copilot plan | varies | copilot |
+| Cursor | Cursor plan | varies | cursor-agent |
+
+aider is installed on the Linux hosts only.
 
 Google AI Ultra ($249.99/mo, $124.99 intro) is the ChatGPT Pro equivalent — highest limits, Deep Think reasoning, Project Mariner, YouTube Premium, $100/mo GCP credits. Google AI Pro ($19.99/mo) is sufficient for generous access with 1M token context.
 
@@ -68,7 +72,7 @@ export GEMINI_API_KEY="..."
 aider
 ```
 
-The same env vars also work for opencode and pi as fallbacks.
+pi also uses these env vars as fallbacks. opencode only picks up `OPENAI_API_KEY`, since its providers are limited to OpenAI and json-lab.
 
 ## Credential Storage Locations
 
@@ -80,7 +84,9 @@ The same env vars also work for opencode and pi as fallbacks.
 | dsh | `~/.dsh/.credentials.yaml` |
 | opencode | `~/.local/share/opencode/auth.json` |
 | pi | `~/.pi/agent/auth.json` |
-| aider | None — reads env vars / `.env` files only |
+| copilot | not yet confirmed on a logged-in machine |
+| cursor-agent | not yet confirmed on a logged-in machine |
+| aider | None — reads env vars / `.env` files only (Linux hosts only) |
 
 ## Config File Locations
 
@@ -91,7 +97,7 @@ The same env vars also work for opencode and pi as fallbacks.
 | codex | `~/.codex/config.toml` | `.codex/config.toml` |
 | agy | `~/.antigravity/` (not yet confirmed on a logged-in machine) | `.antigravityignore` in repo root |
 | dsh | `~/.dsh/profiles/<profile>/cordis.patch.yml` (Models page) | — |
-| opencode | — | `opencode.json` in project root |
+| opencode | `~/.config/opencode/opencode.json` (written by `json-lab-inference.nix`) | `opencode.json` in project root |
 | pi | `~/.pi/agent/settings.json` | — |
 
 ## Notes on Secrets and Nix

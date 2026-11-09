@@ -74,7 +74,12 @@
         };
         homeConfigurations = {
           "JSON-Mini" = import ./hosts/json-mini {
-            inherit nixpkgs home-manager nix-flatpak rex;
+            inherit
+              nixpkgs
+              home-manager
+              nix-flatpak
+              rex
+              ;
           };
           "JSON-STATION" = import ./hosts/json-station {
             inherit nixpkgs home-manager;

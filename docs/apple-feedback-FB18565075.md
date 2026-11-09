@@ -3,8 +3,8 @@
 Draft writeup and filing instructions for an Apple Feedback Assistant report
 about the `sigsuspend(2)` SIGCHLD lost-wakeup bug that hangs interactive zsh
 inside tmux on macOS 26 (Tahoe). This is the bug that drove the workarounds
-in `modules/home/zsh.nix` (custom starship/direnv hooks, pre-baked zcompdump,
-`enableCompletion = !pkgs.stdenv.isDarwin`).
+in `modules/home/zsh.nix` (custom starship/direnv hooks, and
+`enableCompletion = !pkgs.stdenv.hostPlatform.isDarwin`: no compinit on Darwin).
 
 Once Apple ships a fix (or zsh upstreams a `sigtimedwait`/kqueue-based
 `signal_suspend`), the Darwin-gated workarounds in this repo can be removed.

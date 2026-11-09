@@ -5,7 +5,7 @@ the Macs, home-manager only on Linux.
 
 ## Pre-requisites
 
-- Install Nix via [Determinate Installer](https://github.com/DeterminateSystems/nix-installer) (the Mac bootstrap scripts do this for you)
+- Install Nix via [Determinate Installer](https://github.com/DeterminateSystems/nix-installer) (each host's `bootstrap.sh` does this for you)
 - Clone this repo and symlink it: `ln -s /path/to/json-workstation ~/.system`
 
 ## Devices
@@ -21,9 +21,9 @@ the Macs, home-manager only on Linux.
 
 ```
 flake.nix          # all outputs (flake-parts)
-hosts/<host>/      # default.nix composes modules per device; bootstrap.sh for first setup
+hosts/<host>/      # default.nix composes modules per device, plus host-only services; bootstrap.sh for first setup
 modules/home/      # shared home-manager modules (zsh, git, editor, tmux, coding agents, ...)
-modules/darwin/    # macOS system config: apps, Colima, SSH/dev server
+modules/darwin/    # macOS system config: apps, Colima, SSH/dev server, Rex tunnels
 docs/              # setup notes (coding agents, remote viewing, ...)
 windows/           # native Windows services on json-station that Nix can't manage
 ```
@@ -43,9 +43,13 @@ cd json-workstation && bash hosts/<host>/bootstrap.sh
   pulls SSH keys from GitHub, installs Determinate Nix with the FlakeHub cache
   and Homebrew, symlinks `~/.system` and applies nix-darwin. Then enable the 1Password SSH agent and CLI integration in
   1Password developer settings.
-- **json-mini** (`json-mini`): configures the SSH server (key-only auth),
-  disables sleep/suspend, enables lingering so user services start at boot,
-  installs Nix and applies home-manager.
+- **json-mini** (`json-mini`): configures the SSH server (key-only auth,
+  authorized_keys seeded from github.com/jasonwc.keys), disables
+  sleep/suspend, enables lingering so user services start at boot, installs
+  Flatpak + Flathub and Nix, applies home-manager, makes zsh the default shell
+  and sets up COSMIC Terminal. It also installs the VS Code CLI with a
+  `code-tunnel` user service (outside Nix; needs a one-time `code tunnel`
+  sign-in).
 - **json-station** (`json-station`): ensures systemd is enabled in WSL,
   installs Nix and applies home-manager.
 
@@ -79,21 +83,58 @@ dsh) to their latest releases, versions and hashes both; pass names to bump
 only some. The rest follow nixpkgs via `nix flake update`.
 
 opencode, pi and `dsh` also get the DGX Sparks as an extra provider, `json-lab`,
-at `http://inference.json.lab/v1` (`modules/home/json-lab-inference.nix`). The
+at `http://inference.json.lab/v1` (`modules/home/json-lab-inference.nix` for
+opencode and pi, `deepseek-harness.nix` for `dsh`). The
 model list is `modules/home/json-lab-models.nix` and follows json-inference's
 definitions; only one model is served at a time, and the hosted providers
 remain available alongside it. See `docs/coding-agents-setup.md` for subscriptions and per-device setup.
 
-## json-mini monitoring
+## Other modules
 
-`hosts/json-mini/monitoring.nix` runs the endpoints json-lab reads as
-home-manager systemd user services:
+- `modules/home/tmux.nix` + `modules/home/mux`: tmux with a fixed per-directory
+  layout (smug) and a sesh picker (`mux`, `mux-iterm`, `mux-pick`); every host
+- `modules/home/herdr`: herdr, the agent multiplexer, piloted alongside `mux`;
+  every host
+- `modules/home/gh-dash.nix`: gh-dash for open PRs plus `gh greptile` (merge
+  readiness); JSON-PAPERBOOK only
+- peon-ping (flake input): sound cues on Claude Code events; JSON-PAPERBOOK only
 
-| Service | Port | Used by |
+## Host services
+
+**json-mini** (home-manager systemd user services, kept running by lingering):
+
+| Service | File | What |
 |---|---|---|
-| node-exporter | 9100 | Prometheus job `json-mini` |
-| `amdgpu_exporter.py` (Radeon 890M) | 9101 | Prometheus job `json-mini-gpu` |
-| Glances REST API | 61208 | Homepage widgets |
+| node-exporter :9100, `amdgpu_exporter.py` :9101, Glances :61208 | `monitoring.nix` | Prometheus jobs `json-mini` / `json-mini-gpu`; Glances for Homepage |
+| `renovate` (timer, Sun 03:30 PT) | `renovate.nix` | Dependency PRs for json-lab, json-agents, json-inference, json-workstation; writes a node-exporter heartbeat |
+| `repo-docs` (timer, nightly 04:17) | `repo-docs.nix` | Refreshes Byrdpip's read-only `/docs` on spireos (script in json-agents) |
+| `inference-ui` :8091 | `inference-ui.nix` | json-inference's model-swap page, published by json-lab as models.json.lab |
+| `rex` | `rex.nix` | Personal Rex server (see below) |
+| `code-tunnel` | written by `bootstrap.sh` | VS Code remote tunnel (not Nix-managed) |
+
+**JSON-MACBOOK16** (launchd):
+
+| Service | File | What |
+|---|---|---|
+| node-exporter :9100, macmon :9101, Glances :61208 (daemons) | `hosts/personal-macbook/monitoring.nix` | Prometheus jobs `json-macbook16` / `json-macbook16-gpu`; Glances for Homepage |
+| `com.user.rex-server` (agent) | `hosts/personal-macbook/rex.nix` | Personal Rex server (see below) |
+| `com.user.colima` (agent) | `modules/darwin/colima.nix` | Docker engine (also on JSON-PAPERBOOK) |
+
+## Rex
+
+[Rex](https://www.superlogical.com/rex/docs) (Superlogical's multiplexer, private
+beta) comes from the `rex` flake input (preview channel). Personal servers run on
+json-mini (`hosts/json-mini/rex.nix`, systemd user service `rex`) and
+JSON-MACBOOK16 (`hosts/personal-macbook/rex.nix`, launchd `com.user.rex-server`),
+listening only on their Unix sockets. Rex for Mac reaches them through SSH socket
+forwards from `modules/darwin/rex-tunnels.nix`: each Mac lists its targets in
+`rexTunnels.hosts` and gets a launchd agent per target, with the local end at
+`~/.ssh/rex-<host>.sock` (add that path in Rex for Mac). JSON-PAPERBOOK targets
+both servers; JSON-MACBOOK16 targets json-mini.
+
+The agent skill is installed by hand, once per host that runs agents:
+`rex skill setup`. Proposed and ruled-out Rex work is tracked in json-lab's
+`docs/features.md`.
 
 ## Shell helpers
 
@@ -104,9 +145,12 @@ home-manager systemd user services:
 
 ## Related repos
 
-- **json-lab**: the k3s homelab and the DGX Sparks' OS. It scrapes json-mini's
-  exporters and serves `inference.json.lab`.
-- **json-inference**: what the Sparks serve (model definitions, benchmarks).
+- **json-lab**: the k3s homelab and the DGX Sparks' OS. It scrapes the json-mini
+  and JSON-MACBOOK16 exporters and serves `inference.json.lab` and models.json.lab.
+- **json-inference**: what the Sparks serve (model definitions, benchmarks) and
+  the model-swap page json-mini runs.
+- **json-agents**: the personal agents on spireos; json-mini runs its
+  `bin/repo-docs` nightly, and Renovate covers it.
 
 ## Useful links
 
