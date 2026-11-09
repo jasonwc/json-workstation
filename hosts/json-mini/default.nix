@@ -2,6 +2,7 @@
   nixpkgs,
   home-manager,
   nix-flatpak,
+  rex,
 }:
 
 let
@@ -12,6 +13,7 @@ home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
   modules = [
     nix-flatpak.homeManagerModules.nix-flatpak
+    rex.homeManagerModules.default
     ../../modules/home/zsh.nix
     ../../modules/home/starship.nix
     ../../modules/home/tmux.nix
@@ -31,6 +33,7 @@ home-manager.lib.homeManagerConfiguration {
     ./renovate.nix
     ./repo-docs.nix
     ./inference-ui.nix
+    ./rex.nix
     (
       { pkgs, ... }:
       {

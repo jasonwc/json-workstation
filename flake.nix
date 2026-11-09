@@ -24,6 +24,14 @@
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
+
+    # Rex (Superlogical's multiplexer, private beta): prebuilt binary plus a home-manager
+    # module. Preview channel: there's no stable release yet (stable.tar.gz 404s). The lock
+    # records the immutable per-release URL; `nix flake update rex` moves to the newest.
+    rex = {
+      url = "https://pkgs.superlogical.com/rex/nix/preview.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -35,6 +43,7 @@
         nix-flatpak
         nixpkgs
         peon-ping
+        rex
         ;
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -65,7 +74,7 @@
         };
         homeConfigurations = {
           "JSON-Mini" = import ./hosts/json-mini {
-            inherit nixpkgs home-manager nix-flatpak;
+            inherit nixpkgs home-manager nix-flatpak rex;
           };
           "JSON-STATION" = import ./hosts/json-station {
             inherit nixpkgs home-manager;
