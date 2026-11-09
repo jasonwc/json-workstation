@@ -15,6 +15,22 @@
         User = "jasonwc";
       };
 
+      # Pin the json-lab k3s nodes to their static IPs: they don't take DHCP leases,
+      # so Firewalla's `.lan` records are incomplete (json-lab-2 missing) and answer
+      # AAAA with `::`, which ssh tries first and which lands on the local machine.
+      "json-lab-1 json-lab-1.lan" = {
+        HostName = "192.168.124.10";
+        User = "jasonwc";
+      };
+      "json-lab-2 json-lab-2.lan" = {
+        HostName = "192.168.124.11";
+        User = "jasonwc";
+      };
+      "json-lab-3 json-lab-3.lan" = {
+        HostName = "192.168.124.12";
+        User = "jasonwc";
+      };
+
       "*".ControlPath = "none";
     };
   };
