@@ -6,13 +6,11 @@ CLI coding agents installed via `modules/home/coding-agents.nix`. This doc cover
 
 | Provider | Tier | Price | What It Covers |
 |----------|------|-------|---------------|
-| Anthropic | Max (or API) | $100-200/mo | claude, aider (API key) |
-| OpenAI | ChatGPT Pro | $200/mo | codex, opencode, pi, dsh, aider (API key) |
-| Google | AI Pro ($19.99/mo) or AI Ultra ($249.99/mo) | varies | agy, aider, pi |
+| Anthropic | Max (or API) | $100-200/mo | claude |
+| OpenAI | ChatGPT Pro | $200/mo | codex, opencode, pi, dsh |
+| Google | AI Pro ($19.99/mo) or AI Ultra ($249.99/mo) | varies | agy, pi |
 | GitHub | Copilot plan | varies | copilot |
 | Cursor | Cursor plan | varies | cursor-agent |
-
-aider is installed on the Linux hosts only.
 
 Google AI Ultra ($249.99/mo, $124.99 intro) is the ChatGPT Pro equivalent — highest limits, Deep Think reasoning, Project Mariner, YouTube Premium, $100/mo GCP credits. Google AI Pro ($19.99/mo) is sufficient for generous access with 1M token context.
 
@@ -65,14 +63,13 @@ cursor-agent login # Browser -> Cursor account
 ### API key only
 
 ```bash
-# aider reads env vars directly — no login command
+# Optional API-key fallbacks
 export ANTHROPIC_API_KEY="sk-ant-..."
 export OPENAI_API_KEY="sk-..."
 export GEMINI_API_KEY="..."
-aider
 ```
 
-pi also uses these env vars as fallbacks. opencode only picks up `OPENAI_API_KEY`, since its providers are limited to OpenAI and json-lab.
+pi uses these env vars as fallbacks. opencode only picks up `OPENAI_API_KEY`, since its providers are limited to OpenAI and json-lab.
 
 ## Credential Storage Locations
 
@@ -86,13 +83,11 @@ pi also uses these env vars as fallbacks. opencode only picks up `OPENAI_API_KEY
 | pi | `~/.pi/agent/auth.json` |
 | copilot | not yet confirmed on a logged-in machine |
 | cursor-agent | not yet confirmed on a logged-in machine |
-| aider | None — reads env vars / `.env` files only (Linux hosts only) |
 
 ## Config File Locations
 
 | Tool | Global Config | Project Config |
 |------|--------------|----------------|
-| aider | `~/.aider.conf.yml` | `.aider.conf.yml` in repo root |
 | claude | `~/.claude/settings.json` | `.claude/settings.json` |
 | codex | `~/.codex/config.toml` | `.codex/config.toml` |
 | agy | `~/.antigravity/` (not yet confirmed on a logged-in machine) | `.antigravityignore` in repo root |

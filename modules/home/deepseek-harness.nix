@@ -11,7 +11,7 @@
 # patch). Hosted DeepSeek still works once a key is entered on the Models page;
 # the key stays in ~/.dsh/.credentials.yaml, never in Nix.
 let
-  version = "0.2.0-rc.2";
+  version = "0.2.2-rc.1";
   inference = import ./json-lab-models.nix;
 
   # dsh 0.2.x boots profiles through node-addon-require-builtin, which finds a
@@ -22,22 +22,22 @@ let
   # https://nodejs.org/dist/v<version>/SHASUMS256.txt.
   node = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
     pname = "nodejs-official";
-    version = "24.21.0";
+    version = "24.22.2";
 
     src =
       let
         platforms = {
           aarch64-darwin = {
             key = "darwin-arm64";
-            sha256 = "6239d4cf92d864487ec8cd3615038f7b67e7f58b77b21cd2f09ea9fbd68065fe";
+            sha256 = "1f5ac075be50bed4780ea3be19a007fda95ea4d527d28d76d0b91de47d915115";
           };
           x86_64-linux = {
             key = "linux-x64";
-            sha256 = "fd8e59d5a511510f6a298afb548f18c7d2b1be404d8b4a27d94fbe49f56cb2d6";
+            sha256 = "48cc0e21e048790e54c0cf5749c2725005313d652651c40b7a21feb9697aaf75";
           };
           aarch64-linux = {
             key = "linux-arm64";
-            sha256 = "6ad1325edbdb5649c379b75a237147a666c95d4f9ae8d340fef2d1575d289ad2";
+            sha256 = "eb187837a2230d4047161ac0be008584e16b46f726e9c9490ee35dc6b17d9ba8";
           };
         };
         plat =
@@ -49,9 +49,12 @@ let
         inherit (plat) sha256;
       };
 
+    # Leave the binary exactly as nodejs.org built it: dsh >= 0.2.1 segfaults
+    # on a node that autoPatchelf has rewritten. Unpatched, it uses the host's
+    # /lib64 loader, glibc and libstdc++, which the Linux hosts here (Pop!_OS,
+    # WSL Ubuntu; no NixOS) have.
     dontStrip = true;
-    nativeBuildInputs = lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.autoPatchelfHook ];
-    buildInputs = lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.stdenv.cc.cc.lib ];
+    dontPatchELF = true;
 
     installPhase = ''
       runHook preInstall

@@ -17,25 +17,25 @@
 }:
 
 let
-  version = "1.18.35";
+  version = "1.19.5";
 
   # nix system -> (release asset, sha256 hex from the asset digest)
   platforms = {
     aarch64-darwin = {
       asset = "opencode-darwin-arm64.zip";
-      sha256 = "80b05124357a77cd57945bfde36082a028e829c198d222d5e146617f49a2c4b7";
+      sha256 = "c1c9e62521192192ef4c3ed1355ada2144055bddb61682217e997b03c55203c1";
     };
     x86_64-darwin = {
       asset = "opencode-darwin-x64.zip";
-      sha256 = "8127d69e8e94d7adc496e910435f2f73856d87d456e988d3a947f250c95c1be2";
+      sha256 = "b0212efa6db347187225a17fa3a31c6b261bf4c9f1589a290b0ca902d720d250";
     };
     aarch64-linux = {
       asset = "opencode-linux-arm64.tar.gz";
-      sha256 = "f7f2ba59ee8aa94d388f9696575a32d20e71c2ee48def9f80fc693a60fec6c72";
+      sha256 = "fae5be262d693b7c5e562856cc473e59e741772936db0c0600ac0d5ed5bd088b";
     };
     x86_64-linux = {
       asset = "opencode-linux-x64.tar.gz";
-      sha256 = "c8f888b451f5494a18f858fffb0e0b68f4e4baa9c241761c5f206884f0fa640d";
+      sha256 = "588310a336fa3b9df36b3f0225b26f679d453efaad0cf3d66c3651ef3ec1647a";
     };
   };
 

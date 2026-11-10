@@ -23,7 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.8.0";
 
     # Rex (Superlogical's multiplexer, private beta): prebuilt binary plus a home-manager
     # module. Preview channel: there's no stable release yet (stable.tar.gz 404s). The lock

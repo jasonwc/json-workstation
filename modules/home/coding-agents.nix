@@ -14,8 +14,6 @@
   # this on PATH).
   home.sessionVariables.DISABLE_AUTOUPDATER = "1";
 
-  # aider-chat pulls ffmpeg-full → kvazaar, whose check phase is broken on
-  # aarch64-darwin and isn't in any binary cache. Linux-only.
   home.packages =
     with pkgs;
     [
@@ -26,6 +24,5 @@
       antigravity-cli # Gemini CLI's successor; the binary is `agy`
       cursor-cli # the binary is `cursor-agent`
       github-copilot-cli # the binary is `copilot`
-    ]
-    ++ lib.optional stdenv.hostPlatform.isLinux aider-chat;
+    ];
 }

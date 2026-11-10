@@ -14,7 +14,8 @@ cd "$(dirname "$0")/../modules/home"
 
 # set_version <file> <version>
 set_version() {
-  perl -pi -e 's/^(\s*version = ")[^"]+(";)/${1}'"$2"'${2}/' "$1"
+  # First match only: deepseek-harness.nix has a second `version` (its Node pin).
+  perl -0pi -e 's/^(\s*version = ")[^"]+(";)/${1}'"$2"'${2}/m' "$1"
 }
 
 # set_hash <file> <platform selector value> <sha256>

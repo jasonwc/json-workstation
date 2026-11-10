@@ -74,7 +74,7 @@ Validate with `nix flake check`; format with `nixfmt` (in the devShell).
 
 `modules/home/coding-agents.nix` installs Claude Code, Codex, opencode and pi
 (upstream prebuilt binaries, pinned in `modules/home/*-native.nix`), `agy`,
-Cursor's `cursor-agent`, GitHub's `copilot` and, on Linux, aider on every host.
+Cursor's `cursor-agent` and GitHub's `copilot` on every host.
 DeepSeek's `dsh` is a pinned `npx` wrapper (`modules/home/deepseek-harness.nix`)
 with its telemetry and session-log upload turned off.
 
