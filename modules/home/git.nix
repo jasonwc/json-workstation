@@ -18,14 +18,22 @@
       push.autoSetupRemote = true;
       pull.rebase = true;
     };
-    ignores = [ "*.swp" "*.swo" ".DS_Store" "*.un~" ];
+    ignores = [
+      "*.swp"
+      "*.swo"
+      ".DS_Store"
+      "*.un~"
+    ];
   };
 
   programs.gh = {
     enable = true;
     gitCredentialHelper = {
       enable = true;
-      hosts = [ "https://github.com" "https://gist.github.com" ];
+      hosts = [
+        "https://github.com"
+        "https://gist.github.com"
+      ];
     };
   };
 }
