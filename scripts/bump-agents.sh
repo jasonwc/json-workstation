@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Move the pinned coding agents to their latest upstream releases: rewrites
-# `version` and every platform's sha256 in modules/home/*-native.nix, and the
-# dsh version in modules/home/deepseek-harness.nix. Review the diff, then
+# `version` and every platform's sha256 in modules/home/*-native.nix (and
+# herdr-core's in modules/home/herdr/herdr-core-native.nix), and the dsh
+# version in modules/home/deepseek-harness.nix. Review the diff, then
 # `update` to apply.
 #
 #   scripts/bump-agents.sh                 # all of them
@@ -78,6 +79,17 @@ bump_pi() {
   done
 }
 
+bump_herdr-core() {
+  local f=herdr/herdr-core-native.nix m v
+  m=$(curl -fsSL https://releases.herdr.dev/core/latest.json)
+  v=$(jq -r .version <<<"$m")
+  report herdr-core "$(current $f)" "$v"
+  set_version $f "$v"
+  for t in macos-aarch64 macos-x86_64 linux-aarch64 linux-x86_64; do
+    set_hash $f "$t" "$(jq -r --arg t "$t" '.targets[$t].sha256' <<<"$m")"
+  done
+}
+
 bump_dsh() {
   local f=deepseek-harness.nix v
   v=$(npm view @deepseek-ai/dsh dist-tags.latest)
@@ -86,12 +98,12 @@ bump_dsh() {
 }
 
 agents=("$@")
-[[ ${#agents[@]} -gt 0 ]] || agents=(claude codex opencode pi dsh)
+[[ ${#agents[@]} -gt 0 ]] || agents=(claude codex opencode pi dsh herdr-core)
 for a in "${agents[@]}"; do
   case $a in
-  claude | codex | opencode | pi | dsh) "bump_$a" ;;
+  claude | codex | opencode | pi | dsh | herdr-core) "bump_$a" ;;
   *)
-    echo "unknown agent: $a (claude, codex, opencode, pi, dsh)" >&2
+    echo "unknown agent: $a (claude, codex, opencode, pi, dsh, herdr-core)" >&2
     exit 1
     ;;
   esac

@@ -34,8 +34,17 @@
 #   herdr integration install claude    # adds ~/.claude/hooks/herdr-agent-state.sh
 #   herdr integration uninstall claude  # fully reverses it
 
+# herdr-core (`hc`, ./herdr-core-native.nix) is installed beside the TUI. It's
+# the runtime the Herdr mobile apps (iPad, Fold) reach over SSH, and it runs
+# its own server: terminals started in the TUI don't appear in the apps, and
+# the reverse. Start terminals for the apps with `hc run` or from the app.
+# Bump it with `scripts/bump-agents.sh herdr-core`, never `hc update`.
+
 {
-  home.packages = [ pkgs.herdr ];
+  home.packages = [
+    pkgs.herdr
+    (pkgs.callPackage ./herdr-core-native.nix { })
+  ];
 
   xdg.configFile."herdr/config.toml".source = ./config.toml;
 }

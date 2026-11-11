@@ -91,11 +91,17 @@ in
     GOBIN = "$HOME/go/bin";
   };
 
+  # On standalone home-manager (Linux), the Nix profile reaches PATH only
+  # through login shells. `ssh host cmd` runs a non-login zsh, which sources
+  # only ~/.zshenv, so without this entry no Nix-installed tool (hc for the
+  # Herdr apps, rex, herdr) is visible over SSH. nix-darwin's /etc/zshenv
+  # already covers the Macs.
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/.cargo/bin"
     "$HOME/go/bin"
-  ];
+  ]
+  ++ lib.optional pkgs.stdenv.isLinux "$HOME/.nix-profile/bin";
 
   programs.zsh = {
     enable = true;
